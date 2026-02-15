@@ -2,214 +2,257 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escala Aí 2026 | Elencos Completos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Escala 2026 | Elenco Completo</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Teko:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --brand-color: #00ff88;
-            --brand-dark: #121212;
-            --field-green: #2e7d32;
-            --card-bg: #1e1e1e;
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --accent: #ff0055;
+            --bg-dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-main: #ffffff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-tap-highlight-color: transparent; }
+
         body {
-            font-family: 'Roboto Condensed', sans-serif;
-            background-color: var(--brand-dark);
-            color: white;
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at top right, #1e1e2f, #000000);
+            color: var(--text-main);
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* HEADER */
+        /* --- HEADER --- */
         header {
-            background: #1a1a1a;
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--brand-color);
-            z-index: 10;
-        }
-        .logo { font-family: 'Teko'; font-size: 1.8rem; color: var(--brand-color); text-transform: uppercase; }
-        
-        .controls select {
-            background: #333; color: white; border: 1px solid #555;
-            padding: 5px; border-radius: 4px; font-weight: bold;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 20;
         }
 
-        /* CAMPO 3D */
+        .brand {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls { display: flex; gap: 8px; }
+
+        select, button.reset-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: 'Outfit';
+            cursor: pointer;
+            outline: none;
+        }
+        
+        button.reset-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+        /* --- CAMPO 3D --- */
         main {
             flex: 1;
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, #222, #000);
-            perspective: 1000px;
+            perspective: 1200px;
             overflow: hidden;
+            background: linear-gradient(to bottom, #111, #222);
         }
 
-        .pitch-container {
-            width: 95%; max-width: 450px; aspect-ratio: 3/4;
-            background-color: var(--field-green);
-            background-image: repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(0,0,0,0.1) 20px, rgba(0,0,0,0.1) 40px);
+        .pitch {
+            width: 95%; max-width: 500px; aspect-ratio: 2/3;
+            background: 
+                linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+                repeating-linear-gradient(0deg, #2e7d32, #2e7d32 10%, #388e3c 10%, #388e3c 20%);
+            border-radius: 12px;
             position: relative;
-            border: 4px solid rgba(255,255,255,0.8);
-            border-radius: 8px;
             transform: rotateX(20deg) scale(0.95);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+            border: 4px solid rgba(255,255,255,0.7);
+            transition: transform 0.4s ease;
         }
 
-        /* Linhas do campo */
-        .pitch-line { position: absolute; border: 2px solid rgba(255,255,255,0.5); }
-        .center-line { width: 100%; top: 50%; border-bottom: none; height: 2px; background: rgba(255,255,255,0.5); }
+        /* Linhas do Campo */
+        .line { position: absolute; border: 2px solid rgba(255,255,255,0.4); pointer-events: none; }
         .center-circle { width: 80px; height: 80px; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-        .box-area { width: 60%; height: 15%; left: 20%; border-bottom: none; }
-        .box-top { top: 0; } .box-bottom { bottom: 0; border-top: none; border-bottom: 2px solid rgba(255,255,255,0.5); }
+        .mid-line { width: 100%; top: 50%; border-bottom: none; height: 2px; background: rgba(255,255,255,0.4); border:none; }
+        .box-top { width: 60%; height: 14%; top: 0; left: 20%; border-top: none; }
+        .box-bottom { width: 60%; height: 14%; bottom: 0; left: 20%; border-bottom: none; }
 
-        /* SLOTS */
-        .player-slot {
-            position: absolute; transform: translate(-50%, -50%);
-            width: 70px; display: flex; flex-direction: column; align-items: center;
-            cursor: pointer; transition: 0.2s; z-index: 5;
+        /* --- CARD JOGADOR (Draggable) --- */
+        .player-card {
+            position: absolute;
+            width: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: grab;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s;
+            z-index: 10;
         }
-        .player-slot:hover { transform: translate(-50%, -60%) scale(1.1); }
+        .player-card:active { cursor: grabbing; transform: translate(-50%, -50%) scale(1.1); z-index: 100; }
 
-        .slot-circle {
-            width: 45px; height: 45px; background: rgba(255,255,255,0.2);
-            border: 2px dashed rgba(255,255,255,0.6); border-radius: 50%;
+        .avatar-container {
+            width: 48px; height: 48px;
+            background: #333;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.2rem; color: #fff; text-shadow: 1px 1px 2px black;
+            overflow: hidden; position: relative;
         }
-        .slot-label {
-            background: rgba(0,0,0,0.8); padding: 2px 6px; border-radius: 4px;
-            font-size: 0.7rem; margin-top: -10px; z-index: 2; font-weight: bold;
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-icon { font-size: 20px; color: #aaa; }
+
+        .pos-badge {
+            position: absolute; top: -5px; right: -5px;
+            background: var(--bg-dark); color: var(--primary);
+            font-size: 0.6rem; font-weight: bold;
+            padding: 2px 5px; border-radius: 8px;
+            border: 1px solid var(--primary); z-index: 2;
         }
 
-        /* JOGADOR ESCALADO */
-        .player-filled { display: none; flex-direction: column; align-items: center; width: 100%; }
-        .slot-filled .player-filled { display: flex; }
-        .slot-filled .slot-circle, .slot-filled .slot-label { display: none; }
-
-        .filled-img {
-            width: 50px; height: 50px; background: #ddd; border-radius: 50%;
-            border: 2px solid var(--brand-color); overflow: hidden;
-            display: flex; justify-content: center; align-items: center; color: #333; font-size: 24px;
+        .info-box {
+            margin-top: -8px;
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(4px);
+            padding: 2px 6px;
+            border-radius: 6px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            min-width: 80px;
         }
-        .filled-img img { width: 100%; height: 100%; object-fit: cover; }
+        .p-name { font-family: 'Teko'; font-size: 0.9rem; line-height: 1; color: white; white-space: nowrap; }
+        .p-team { font-size: 0.6rem; color: #ccc; }
         
-        .filled-name {
-            background: white; color: black; font-family: 'Teko'; font-size: 0.9rem;
-            padding: 0 8px; border-radius: 8px; margin-top: -8px; white-space: nowrap;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-        .filled-team { font-size: 0.6rem; text-shadow: 1px 1px 1px black; margin-top: 2px; }
-
-        /* MODAL */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 100;
-            display: none; justify-content: center; align-items: center;
-            backdrop-filter: blur(5px);
-        }
-        .modal-overlay.active { display: flex; }
-
-        .modal-content {
-            background: #1e1e1e; width: 90%; max-width: 400px; height: 85%;
-            border-radius: 12px; border: 1px solid #333; display: flex; flex-direction: column;
+        /* Estado Vazio */
+        .empty-card .avatar-container { background: rgba(0,0,0,0.4); border: 2px dashed rgba(255,255,255,0.3); }
+        .empty-card .info-box { display: none; }
+        .empty-label { 
+            margin-top: 5px; background: var(--accent); color: white; 
+            padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; 
         }
 
-        .modal-header {
-            padding: 15px; background: #252525; border-bottom: 1px solid #333;
+        /* --- SIDEBAR --- */
+        .sidebar {
+            position: fixed; top: 0; right: -100%;
+            width: 100%; max-width: 360px; height: 100%;
+            background: #111;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.8);
+            transition: 0.3s ease-in-out;
+            z-index: 50;
+            display: flex; flex-direction: column;
+            border-left: 1px solid #333;
         }
-        .modal-title { font-family: 'Teko'; font-size: 1.4rem; color: var(--brand-color); margin-bottom: 10px; }
-        
+        .sidebar.active { right: 0; }
+
+        .sidebar-header {
+            padding: 15px; background: #1a1a1a;
+            border-bottom: 1px solid #333;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .sidebar-title { font-family: 'Teko'; font-size: 1.4rem; color: var(--primary); }
+        .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+        .search-container { padding: 10px; }
         #searchInput {
-            width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #444;
-            background: #111; color: white; font-family: 'Roboto Condensed';
+            width: 100%; background: #222; border: 1px solid #444; color: white;
+            padding: 10px; border-radius: 6px; outline: none; font-family: 'Outfit';
         }
 
-        .player-list { flex: 1; overflow-y: auto; padding: 10px; }
-        
+        .player-list { flex: 1; overflow-y: auto; padding: 0 10px 20px; }
+
         .list-item {
-            display: flex; align-items: center; background: #2a2a2a;
-            margin-bottom: 8px; padding: 10px; border-radius: 6px; cursor: pointer;
-            border: 1px solid transparent;
+            display: flex; align-items: center;
+            background: #1f1f1f; margin-bottom: 8px; padding: 8px;
+            border-radius: 6px; cursor: pointer; border-left: 3px solid transparent;
         }
-        .list-item:hover { border-color: var(--brand-color); background: #333; }
+        .list-item:hover { background: #2a2a2a; border-left-color: var(--primary); }
         
         .list-img {
-            width: 40px; height: 40px; border-radius: 50%; background: #444; margin-right: 12px;
-            display: flex; justify-content: center; align-items: center;
+            width: 35px; height: 35px; border-radius: 50%; 
+            background: #333; margin-right: 10px; overflow: hidden;
         }
-        .list-info h4 { font-size: 1rem; margin: 0; }
-        .list-info p { font-size: 0.75rem; color: #aaa; margin: 0; }
-        .list-pos { margin-left: auto; font-size: 0.7rem; background: #444; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
-        
-        /* Cores das posições */
-        .pos-GOL { color: #ffca28; }
-        .pos-ZAG { color: #42a5f5; }
-        .pos-LAT { color: #29b6f6; }
-        .pos-VOL { color: #ef5350; }
-        .pos-MEI { color: #66bb6a; }
-        .pos-ATA { color: #ff7043; }
-        .pos-CA { color: #ff5722; font-weight: 800; }
+        .list-details h4 { font-size: 0.9rem; margin-bottom: 2px; }
+        .list-details p { font-size: 0.7rem; color: #888; }
+        .list-pos { 
+            margin-left: auto; font-size: 0.7rem; font-weight: bold; 
+            background: #333; padding: 3px 6px; border-radius: 4px; 
+            color: var(--primary);
+        }
 
-        .close-modal { 
-            text-align: center; padding: 10px; background: #252525; 
-            cursor: pointer; color: #aaa; border-top: 1px solid #333;
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 40;
+            opacity: 0; pointer-events: none; transition: 0.3s;
         }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo"><i class="fas fa-futbol"></i> Escala 2026</div>
+        <div class="brand"><i class="fas fa-fire"></i> Fut 2026</div>
         <div class="controls">
+            <button class="reset-btn" onclick="resetPositions()" title="Resetar"><i class="fas fa-sync"></i></button>
             <select id="formationSelect">
                 <option value="4-3-3">4-3-3</option>
                 <option value="4-4-2">4-4-2</option>
                 <option value="3-5-2">3-5-2</option>
-                <option value="3-4-3">3-4-3</option>
+                <option value="4-2-3-1">4-2-3-1</option>
                 <option value="5-3-2">5-3-2</option>
             </select>
         </div>
     </header>
 
     <main>
-        <div class="pitch-container" id="pitch">
-            <div class="pitch-line center-line"></div>
-            <div class="pitch-line center-circle"></div>
-            <div class="pitch-line box-area box-top"></div>
-            <div class="pitch-line box-area box-bottom"></div>
+        <div class="pitch" id="pitch">
+            <div class="line mid-line"></div>
+            <div class="line center-circle"></div>
+            <div class="line box-top"></div>
+            <div class="line box-bottom"></div>
             </div>
     </main>
 
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title" id="modalTitle">Selecionar Jogador</div>
-                <input type="text" id="searchInput" placeholder="Buscar jogador...">
-            </div>
-            <div class="player-list" id="playerList">
-                </div>
-            <div class="close-modal" onclick="closeModal()">Fechar</div>
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-title">Selecione</div>
+            <button class="close-btn" onclick="closeSidebar()">&times;</button>
         </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Nome, time ou posição...">
+        </div>
+        <div class="player-list" id="playerList"></div>
     </div>
 
     <script>
-        /* ==========================================================
-           BANCO DE DADOS COMPLETO (BASEADO NA SUA LISTA 2026)
-           ========================================================== */
+        // --- BASE DE DADOS COMPLETA 2026 ---
         const playersData = [
-            // --- PALMEIRAS ---
+            // PALMEIRAS
             { name: "Carlos Miguel", team: "Palmeiras", pos: ["GOL"] },
             { name: "Marcelo Lomba", team: "Palmeiras", pos: ["GOL"] },
             { name: "Aranha", team: "Palmeiras", pos: ["GOL"] },
@@ -242,7 +285,7 @@
             { name: "Luighi", team: "Palmeiras", pos: ["CA"] },
             { name: "Erick Belé", team: "Palmeiras", pos: ["CA"] },
 
-            // --- CORINTHIANS ---
+            // CORINTHIANS
             { name: "Hugo Souza", team: "Corinthians", pos: ["GOL"] },
             { name: "Matheus Donelli", team: "Corinthians", pos: ["GOL"] },
             { name: "Felipe Longo", team: "Corinthians", pos: ["GOL"] },
@@ -276,7 +319,7 @@
             { name: "Pedro Raul", team: "Corinthians", pos: ["CA"] },
             { name: "Gui Negão", team: "Corinthians", pos: ["CA"] },
 
-            // --- SÃO PAULO ---
+            // SÃO PAULO
             { name: "Carlos Coronel", team: "São Paulo", pos: ["GOL"] },
             { name: "Rafael", team: "São Paulo", pos: ["GOL"] },
             { name: "Young", team: "São Paulo", pos: ["GOL"] },
@@ -315,7 +358,7 @@
             { name: "Luciano", team: "São Paulo", pos: ["CA", "ATA"] },
             { name: "Paulinho (CA)", team: "São Paulo", pos: ["CA"] },
 
-            // --- FLAMENGO ---
+            // FLAMENGO
             { name: "Agustín Rossi", team: "Flamengo", pos: ["GOL"] },
             { name: "Andrew", team: "Flamengo", pos: ["GOL"] },
             { name: "Dyogo Alves", team: "Flamengo", pos: ["GOL"] },
@@ -344,7 +387,7 @@
             { name: "Bruno Henrique", team: "Flamengo", pos: ["ATA"] },
             { name: "Pedro", team: "Flamengo", pos: ["CA"] },
 
-            // --- BOTAFOGO ---
+            // BOTAFOGO
             { name: "Léo Linck", team: "Botafogo", pos: ["GOL"] },
             { name: "Neto", team: "Botafogo", pos: ["GOL"] },
             { name: "Cristhian Loor", team: "Botafogo", pos: ["GOL"] },
@@ -373,7 +416,7 @@
             { name: "Arthur Cabral", team: "Botafogo", pos: ["CA", "ATA"] },
             { name: "Chris Ramos", team: "Botafogo", pos: ["ATA"] },
 
-            // --- FLUMINENSE ---
+            // FLUMINENSE
             { name: "Fábio", team: "Fluminense", pos: ["GOL"] },
             { name: "Marcelo Pitaluga", team: "Fluminense", pos: ["GOL"] },
             { name: "Vitor Eudes", team: "Fluminense", pos: ["GOL"] },
@@ -407,7 +450,7 @@
             { name: "Germán Cano", team: "Fluminense", pos: ["CA"] },
             { name: "John Kennedy", team: "Fluminense", pos: ["CA"] },
 
-            // --- GRÊMIO ---
+            // GRÊMIO
             { name: "Weverton (GOL)", team: "Grêmio", pos: ["GOL"] },
             { name: "Gabriel Grando", team: "Grêmio", pos: ["GOL"] },
             { name: "Thiago Beltrame", team: "Grêmio", pos: ["GOL"] },
@@ -445,7 +488,7 @@
             { name: "Roger", team: "Grêmio", pos: ["CA"] },
             { name: "Willian", team: "Grêmio", pos: ["CA"] },
 
-            // --- VASCO ---
+            // VASCO
             { name: "Léo Jardim", team: "Vasco", pos: ["GOL"] },
             { name: "Daniel Fuzato", team: "Vasco", pos: ["GOL"] },
             { name: "Pablo", team: "Vasco", pos: ["GOL"] },
@@ -474,171 +517,246 @@
             { name: "Johan Rojas", team: "Vasco", pos: ["ATA"] },
             { name: "Marino Hinestroza", team: "Vasco", pos: ["ATA"] },
             { name: "Brenner", team: "Vasco", pos: ["ATA", "CA"] },
-            { name: "Claudio Spinelli", team: "Vasco", pos: ["ATA"] }
+            { name: "Claudio Spinelli", team: "Vasco", pos: ["ATA"] },
+            
+            // CRUZEIRO (Adicionando alguns da lista implícita para completar os grandes)
+            { name: "Cássio", team: "Cruzeiro", pos: ["GOL"] },
+            { name: "João Marcelo", team: "Cruzeiro", pos: ["ZAG"] },
+            { name: "Lucas Villalba (CRU)", team: "Cruzeiro", pos: ["ZAG"] },
+            { name: "William", team: "Cruzeiro", pos: ["LAT"] },
+            { name: "Matheus Henrique", team: "Cruzeiro", pos: ["VOL"] },
+            { name: "Walace", team: "Cruzeiro", pos: ["VOL"] },
+            { name: "Matheus Pereira", team: "Cruzeiro", pos: ["MEI"] },
+            { name: "Barreal", team: "Cruzeiro", pos: ["ATA"] },
+            { name: "Kaio Jorge", team: "Cruzeiro", pos: ["CA"] },
+            { name: "Gabriel Veron", team: "Cruzeiro", pos: ["ATA"] }
         ];
 
-        // Adiciona IDs dinâmicos
-        playersData.forEach((p, index) => {
-            p.id = index + 1;
-            p.imgHtml = '<i class="fas fa-user"></i>';
-        });
+        // IDs Unicos
+        playersData.forEach((p, i) => p.id = i + 1);
 
-        /* ==========================================================
-           LÓGICA DO APP
-           ========================================================== */
         const pitch = document.getElementById('pitch');
-        const modal = document.getElementById('modal');
-        const modalList = document.getElementById('playerList');
-        const modalTitle = document.getElementById('modalTitle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const playerList = document.getElementById('playerList');
         const searchInput = document.getElementById('searchInput');
-        const formationSelect = document.getElementById('formationSelect');
 
+        let activeSlot = null;
         let squad = {};
-        let currentSlotIndex = null;
-        let currentRole = null;
+        let isDragging = false;
+        let activeDragEl = null;
+        let startX, startY, startLeft, startTop;
 
         const formations = {
             '4-3-3': [
-                { l: 50, t: 90, r: 'GOL' },
-                { l: 15, t: 75, r: 'LAT' }, { l: 38, t: 80, r: 'ZAG' }, { l: 62, t: 80, r: 'ZAG' }, { l: 85, t: 75, r: 'LAT' },
-                { l: 50, t: 55, r: 'VOL' }, { l: 30, t: 45, r: 'MEI' }, { l: 70, t: 45, r: 'MEI' },
-                { l: 15, t: 25, r: 'ATA' }, { l: 50, t: 20, r: 'CA' }, { l: 85, t: 25, r: 'ATA' }
+                {t: 88, l: 50, r:'GOL'}, 
+                {t: 75, l: 15, r:'LAT'}, {t: 80, l: 38, r:'ZAG'}, {t: 80, l: 62, r:'ZAG'}, {t: 75, l: 85, r:'LAT'},
+                {t: 60, l: 50, r:'VOL'}, {t: 45, l: 30, r:'MEI'}, {t: 45, l: 70, r:'MEI'},
+                {t: 20, l: 15, r:'ATA'}, {t: 15, l: 50, r:'CA'}, {t: 20, l: 85, r:'ATA'}
             ],
             '4-4-2': [
-                { l: 50, t: 90, r: 'GOL' },
-                { l: 15, t: 75, r: 'LAT' }, { l: 38, t: 80, r: 'ZAG' }, { l: 62, t: 80, r: 'ZAG' }, { l: 85, t: 75, r: 'LAT' },
-                { l: 25, t: 55, r: 'VOL' }, { l: 45, t: 50, r: 'MEI' }, { l: 55, t: 50, r: 'MEI' }, { l: 75, t: 55, r: 'VOL' },
-                { l: 35, t: 20, r: 'ATA' }, { l: 65, t: 20, r: 'CA' }
+                {t: 88, l: 50, r:'GOL'},
+                {t: 75, l: 15, r:'LAT'}, {t: 80, l: 38, r:'ZAG'}, {t: 80, l: 62, r:'ZAG'}, {t: 75, l: 85, r:'LAT'},
+                {t: 50, l: 20, r:'MEI'}, {t: 60, l: 40, r:'VOL'}, {t: 60, l: 60, r:'VOL'}, {t: 50, l: 80, r:'MEI'},
+                {t: 20, l: 35, r:'ATA'}, {t: 20, l: 65, r:'CA'}
             ],
             '3-5-2': [
-                { l: 50, t: 90, r: 'GOL' },
-                { l: 25, t: 80, r: 'ZAG' }, { l: 50, t: 82, r: 'ZAG' }, { l: 75, t: 80, r: 'ZAG' },
-                { l: 10, t: 50, r: 'LAT' }, { l: 35, t: 60, r: 'VOL' }, { l: 65, t: 60, r: 'VOL' }, { l: 90, t: 50, r: 'LAT' },
-                { l: 50, t: 40, r: 'MEI' },
-                { l: 35, t: 20, r: 'ATA' }, { l: 65, t: 20, r: 'CA' }
+                {t: 90, l: 50, r:'GOL'},
+                {t: 75, l: 25, r:'ZAG'}, {t: 78, l: 50, r:'ZAG'}, {t: 75, l: 75, r:'ZAG'},
+                {t: 55, l: 10, r:'LAT'}, {t: 60, l: 35, r:'VOL'}, {t: 60, l: 65, r:'VOL'}, {t: 55, l: 90, r:'LAT'},
+                {t: 40, l: 50, r:'MEI'},
+                {t: 20, l: 35, r:'ATA'}, {t: 20, l: 65, r:'CA'}
             ],
-            '3-4-3': [
-                { l: 50, t: 90, r: 'GOL' },
-                { l: 25, t: 80, r: 'ZAG' }, { l: 50, t: 82, r: 'ZAG' }, { l: 75, t: 80, r: 'ZAG' },
-                { l: 20, t: 55, r: 'VOL' }, { l: 80, t: 55, r: 'VOL' }, { l: 40, t: 45, r: 'MEI' }, { l: 60, t: 45, r: 'MEI' },
-                { l: 15, t: 20, r: 'ATA' }, { l: 50, t: 15, r: 'CA' }, { l: 85, t: 20, r: 'ATA' }
+            '4-2-3-1': [
+                {t: 88, l: 50, r:'GOL'},
+                {t: 75, l: 15, r:'LAT'}, {t: 80, l: 35, r:'ZAG'}, {t: 80, l: 65, r:'ZAG'}, {t: 75, l: 85, r:'LAT'},
+                {t: 60, l: 40, r:'VOL'}, {t: 60, l: 60, r:'VOL'},
+                {t: 40, l: 20, r:'MEI'}, {t: 35, l: 50, r:'MEI'}, {t: 40, l: 80, r:'MEI'},
+                {t: 15, l: 50, r:'CA'}
             ],
             '5-3-2': [
-                { l: 50, t: 90, r: 'GOL' },
-                { l: 10, t: 70, r: 'LAT' }, { l: 30, t: 80, r: 'ZAG' }, { l: 50, t: 80, r: 'ZAG' }, { l: 70, t: 80, r: 'ZAG' }, { l: 90, t: 70, r: 'LAT' },
-                { l: 35, t: 55, r: 'VOL' }, { l: 50, t: 55, r: 'VOL' }, { l: 65, t: 55, r: 'VOL' },
-                { l: 35, t: 20, r: 'ATA' }, { l: 65, t: 20, r: 'CA' }
+                {t: 90, l: 50, r:'GOL'},
+                {t: 70, l: 10, r:'LAT'}, {t: 80, l: 30, r:'ZAG'}, {t: 85, l: 50, r:'ZAG'}, {t: 80, l: 70, r:'ZAG'}, {t: 70, l: 90, r:'LAT'},
+                {t: 55, l: 40, r:'VOL'}, {t: 55, l: 60, r:'VOL'}, {t: 45, l: 50, r:'MEI'},
+                {t: 20, l: 35, r:'ATA'}, {t: 20, l: 65, r:'CA'}
             ]
         };
 
-        function renderPitch() {
-            document.querySelectorAll('.player-slot').forEach(e => e.remove());
-            const tactics = formations[formationSelect.value];
+        function init() {
+            renderPitch('4-3-3');
+            document.getElementById('formationSelect').addEventListener('change', e => {
+                squad = {}; 
+                renderPitch(e.target.value);
+            });
+            searchInput.addEventListener('input', renderList);
+        }
 
-            tactics.forEach((pos, index) => {
-                const div = document.createElement('div');
-                div.className = 'player-slot';
-                div.style.left = pos.l + '%';
-                div.style.top = pos.t + '%';
+        function renderPitch(fmt) {
+            pitch.innerHTML = `
+                <div class="line mid-line"></div>
+                <div class="line center-circle"></div>
+                <div class="line box-top"></div>
+                <div class="line box-bottom"></div>
+            `;
+            formations[fmt].forEach((pos, i) => {
+                const el = document.createElement('div');
+                el.className = 'player-card empty-card';
+                el.style.top = pos.t + '%';
+                el.style.left = pos.l + '%';
+                el.dataset.idx = i;
+                el.dataset.role = pos.r;
+                el.dataset.ot = pos.t + '%';
+                el.dataset.ol = pos.l + '%';
+                el.id = `slot-${i}`;
                 
-                const player = squad[index];
-                if (player) div.classList.add('slot-filled');
-
-                const emptyHTML = `
-                    <div class="slot-circle"><i class="fas fa-plus"></i></div>
-                    <div class="slot-label">${pos.r}</div>
-                `;
+                updateSlot(el, null, pos.r);
                 
-                const filledHTML = player ? `
-                    <div class="player-filled">
-                        <div class="filled-img">${player.imgHtml}</div>
-                        <div class="filled-name">${player.name.split(' ')[0]}</div>
-                        <div class="filled-team">${player.team}</div>
-                    </div>
-                ` : '<div class="player-filled"></div>';
-
-                div.innerHTML = emptyHTML + filledHTML;
-                div.onclick = () => openModal(index, pos.r);
-                pitch.appendChild(div);
+                el.addEventListener('mousedown', dragStart);
+                el.addEventListener('touchstart', dragStart, {passive:false});
+                el.addEventListener('click', e => {
+                    if(!isDragging) openSidebar(i, pos.r);
+                });
+                
+                pitch.appendChild(el);
             });
         }
 
-        function openModal(index, role) {
-            currentSlotIndex = index;
-            currentRole = role;
-            modal.classList.add('active');
-            modalTitle.innerText = `Escolher ${role}`;
-            searchInput.value = '';
-            filterPlayers();
+        function updateSlot(el, p, r) {
+            if(p) {
+                el.className = 'player-card';
+                el.innerHTML = `
+                    <div class="pos-badge">${p.pos[0]}</div>
+                    <div class="avatar-container">
+                        <img src="https://ui-avatars.com/api/?name=${p.name}&background=random&color=fff&size=128" class="avatar-img">
+                    </div>
+                    <div class="info-box">
+                        <div class="p-name">${p.name.split(' ')[0]}</div>
+                        <div class="p-team">${p.team}</div>
+                    </div>
+                `;
+            } else {
+                el.className = 'player-card empty-card';
+                el.innerHTML = `
+                    <div class="avatar-container"><i class="fas fa-plus avatar-icon"></i></div>
+                    <div class="empty-label">${r}</div>
+                `;
+            }
         }
 
-        function filterPlayers() {
+        function openSidebar(idx, role) {
+            activeSlot = idx;
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+            document.querySelector('.sidebar-title').innerText = `Escolher ${role}`;
+            searchInput.value = '';
+            renderList();
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function renderList() {
             const term = searchInput.value.toLowerCase();
-            modalList.innerHTML = '';
+            const slotRole = document.getElementById(`slot-${activeSlot}`).dataset.role;
             
-            // Botão Remover
-            if (squad[currentSlotIndex]) {
-                const removeBtn = document.createElement('div');
-                removeBtn.className = 'list-item';
-                removeBtn.innerHTML = '<div style="color:red; text-align:center; width:100%">REMOVER JOGADOR</div>';
-                removeBtn.onclick = () => selectPlayer(null);
-                modalList.appendChild(removeBtn);
+            playerList.innerHTML = '';
+
+            // Botão remover
+            if(squad[activeSlot]) {
+                const rm = document.createElement('div');
+                rm.className = 'list-item';
+                rm.innerHTML = '<div style="color:red; text-align:center; width:100%">Remover Jogador</div>';
+                rm.onclick = () => selectPlayer(null);
+                playerList.appendChild(rm);
             }
 
-            // Filtrar lógica
-            const list = playersData.filter(p => {
-                const nameMatch = p.name.toLowerCase().includes(term);
-                const teamMatch = p.team.toLowerCase().includes(term);
-                
-                // Lógica de posição flexível
-                let posMatch = false;
-                if(currentRole == 'GOL' && p.pos.includes('GOL')) posMatch = true;
-                if(currentRole == 'ZAG' && p.pos.includes('ZAG')) posMatch = true;
-                if(currentRole == 'LAT' && p.pos.includes('LAT')) posMatch = true;
-                if(currentRole == 'VOL' && (p.pos.includes('VOL') || p.pos.includes('MEI'))) posMatch = true;
-                if(currentRole == 'MEI' && (p.pos.includes('MEI') || p.pos.includes('VOL') || p.pos.includes('ATA'))) posMatch = true;
-                if((currentRole == 'ATA' || currentRole == 'CA') && (p.pos.includes('ATA') || p.pos.includes('CA') || p.pos.includes('MEI'))) posMatch = true;
-
-                return (nameMatch || teamMatch) && posMatch;
+            const filtered = playersData.filter(p => {
+                const matchText = p.name.toLowerCase().includes(term) || p.team.toLowerCase().includes(term);
+                // Se não digitou nada, filtra pela posição. Se digitou, mostra tudo.
+                if(!term) {
+                    if(slotRole === 'GOL' && !p.pos.includes('GOL')) return false;
+                    // Lógica simples: Defensores
+                    if(slotRole === 'ZAG' && !p.pos.includes('ZAG')) return false;
+                }
+                return matchText;
             });
 
-            list.forEach(p => {
-                // Não mostra quem já está escalado (exceto ele mesmo)
-                const isUsed = Object.values(squad).some(s => s && s.id === p.id && s.id !== squad[currentSlotIndex]?.id);
-                if (isUsed) return;
+            filtered.forEach(p => {
+                // Remove já escalados
+                if(Object.values(squad).some(s => s && s.id === p.id && s.id !== squad[activeSlot]?.id)) return;
 
-                const div = document.createElement('div');
-                div.className = 'list-item';
-                div.innerHTML = `
-                    <div class="list-img">${p.imgHtml}</div>
-                    <div class="list-info">
+                const d = document.createElement('div');
+                d.className = 'list-item';
+                d.innerHTML = `
+                    <div class="list-img">
+                        <img src="https://ui-avatars.com/api/?name=${p.name}&background=random&color=fff" style="width:100%">
+                    </div>
+                    <div class="list-details">
                         <h4>${p.name}</h4>
                         <p>${p.team}</p>
                     </div>
-                    <div class="list-pos pos-${p.pos[0]}">${p.pos[0]}</div>
+                    <div class="list-pos">${p.pos[0]}</div>
                 `;
-                div.onclick = () => selectPlayer(p);
-                modalList.appendChild(div);
+                d.onclick = () => selectPlayer(p);
+                playerList.appendChild(d);
             });
         }
 
         function selectPlayer(p) {
-            squad[currentSlotIndex] = p;
-            closeModal();
-            renderPitch();
+            squad[activeSlot] = p;
+            const el = document.getElementById(`slot-${activeSlot}`);
+            updateSlot(el, p, el.dataset.role);
+            closeSidebar();
         }
 
-        function closeModal() { modal.classList.remove('active'); }
+        function resetPositions() {
+            document.querySelectorAll('.player-card').forEach(el => {
+                el.style.top = el.dataset.ot;
+                el.style.left = el.dataset.ol;
+            });
+        }
 
-        formationSelect.addEventListener('change', () => {
-            squad = {}; 
-            renderPitch();
-        });
-        
-        searchInput.addEventListener('input', filterPlayers);
+        // Drag Logic Simplificada
+        function dragStart(e) {
+            activeDragEl = e.currentTarget;
+            isDragging = false;
+            const evt = e.type.includes('mouse') ? e : e.touches[0];
+            startX = evt.clientX;
+            startY = evt.clientY;
+            startLeft = activeDragEl.offsetLeft;
+            startTop = activeDragEl.offsetTop;
 
-        // Init
-        renderPitch();
+            document.addEventListener('mousemove', dragMove);
+            document.addEventListener('touchmove', dragMove, {passive:false});
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchend', dragEnd);
+        }
+
+        function dragMove(e) {
+            const evt = e.type.includes('mouse') ? e : e.touches[0];
+            if(Math.abs(evt.clientX - startX) > 5 || Math.abs(evt.clientY - startY) > 5) {
+                isDragging = true;
+                if(e.cancelable) e.preventDefault();
+            }
+            if(!isDragging) return;
+            
+            activeDragEl.style.left = (startLeft + (evt.clientX - startX)) + 'px';
+            activeDragEl.style.top = (startTop + (evt.clientY - startY)) + 'px';
+            activeDragEl.style.zIndex = 1000;
+        }
+
+        function dragEnd() {
+            document.removeEventListener('mousemove', dragMove);
+            document.removeEventListener('touchmove', dragMove);
+            document.removeEventListener('mouseup', dragEnd);
+            document.removeEventListener('touchend', dragEnd);
+            if(activeDragEl) activeDragEl.style.zIndex = '';
+            setTimeout(() => isDragging = false, 50);
+        }
+
+        init();
     </script>
 </body>
 </html>
