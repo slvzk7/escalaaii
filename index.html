@@ -2,21 +2,20 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fut Master | Ultimate Creator</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Outfit:wght@300;500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fut Master 2026 | Elencos Atualizados</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
-            --gold: #d4af37;
-            --dark-bg: #09090b;
-            --panel-bg: rgba(20, 20, 20, 0.85);
-            --glass: rgba(255, 255, 255, 0.05);
+            --gold: #f2c44e;
+            --dark-bg: #0d0d11;
+            --panel: rgba(20, 20, 25, 0.95);
             --border: rgba(255, 255, 255, 0.1);
-            --accent: #00f2ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
@@ -24,7 +23,7 @@
         body {
             font-family: 'Outfit', sans-serif;
             background-color: var(--dark-bg);
-            background-image: radial-gradient(circle at 50% 0%, #1e1e24 0%, #000 80%);
+            background-image: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0d0d11 100%);
             color: white;
             height: 100vh;
             overflow: hidden;
@@ -39,624 +38,294 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border);
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.8);
             backdrop-filter: blur(10px);
-            z-index: 50;
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
         }
 
-        .brand {
-            font-family: 'Rajdhani';
-            font-size: 1.6rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 2px;
-            display: flex; align-items: center; gap: 10px;
-        }
-
+        .logo { font-family: 'Rajdhani'; font-size: 1.5rem; font-weight: 700; color: var(--gold); }
         .controls { display: flex; gap: 10px; }
 
         .btn {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: #ddd;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Rajdhani';
-            font-weight: bold;
-        }
-        .btn:hover { border-color: var(--gold); color: white; }
-        
-        .btn-download {
-            background: linear-gradient(45deg, #b88a00, #f9d970);
-            color: black; border: none;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-        .btn-download:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
-
-        select {
-            background: #111; color: white; border: 1px solid var(--border);
-            padding: 8px; border-radius: 6px; outline: none;
+            background: #1a1a1a; border: 1px solid var(--border); color: white;
+            padding: 8px 15px; border-radius: 6px; cursor: pointer; font-family: 'Rajdhani';
         }
 
-        /* LAYOUT PRINCIPAL */
-        .main-layout {
-            display: flex;
-            flex: 1;
-            height: calc(100vh - 60px);
-        }
+        .btn-save { background: var(--gold); color: black; border: none; font-weight: 700; }
 
-        /* CAMPO (Responsivo para Chromebook) */
-        .pitch-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding: 10px;
-        }
+        /* CAMPO */
+        .main-container { display: flex; flex: 1; height: calc(100vh - 60px); }
 
-        .pitch-container {
-            position: relative;
-            /* AQUI ESTÁ A MÁGICA: Altura baseada na tela, não em pixels */
-            height: 75vh; 
-            aspect-ratio: 3/4; /* Mantém formato de campo */
-            max-width: 600px;
-            transition: 0.3s;
-        }
+        .pitch-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
 
         .pitch {
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)),
-                repeating-linear-gradient(0deg, #183818, #183818 10%, #1e451e 10%, #1e451e 20%);
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 12px;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            transform: perspective(800px) rotateX(5deg); /* Leve inclinação 3D */
+            width: 100%; max-width: 500px; aspect-ratio: 3/4;
+            background: #1e451e; border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 10px; position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* Linhas do Campo */
         .line { position: absolute; border: 2px solid rgba(255,255,255,0.2); pointer-events: none; }
-        .mid-line { width: 100%; top: 50%; height: 0; border-top: 2px solid rgba(255,255,255,0.2); border-bottom: none; }
-        .center-circle { width: 20%; padding-top: 20%; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-        .box-top { width: 40%; height: 15%; top: 0; left: 30%; border-top: none; }
-        .box-bottom { width: 40%; height: 15%; bottom: 0; left: 30%; border-bottom: none; }
+        .mid-line { width: 100%; top: 50%; }
+        .center-circle { width: 30%; aspect-ratio: 1; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
-        /* JOGADOR (Card) */
-        .player-card {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            display: flex; flex-direction: column; align-items: center;
-            cursor: pointer; z-index: 10;
-            width: 14%; /* Tamanho relativo ao campo */
+        /* JOGADOR */
+        .player-slot {
+            position: absolute; width: 18%; transform: translate(-50%, -50%);
+            display: flex; flex-direction: column; align-items: center; cursor: pointer;
         }
-        .player-card:hover { z-index: 20; transform: translate(-50%, -55%) scale(1.1); transition: 0.2s; }
 
-        .p-avatar {
-            width: 100%; aspect-ratio: 1/1;
-            background: #222; border-radius: 50%;
-            border: 2px solid white; overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            position: relative;
+        .p-icon {
+            width: 100%; aspect-ratio: 1; background: rgba(0,0,0,0.5);
+            border-radius: 50%; border: 2px dashed rgba(255,255,255,0.3);
+            display: flex; items-center; justify-content: center; overflow: hidden;
         }
-        .p-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .p-badge {
-            position: absolute; top: -5px; right: -5px;
-            background: var(--gold); color: black;
-            font-size: 0.6rem; font-weight: bold; padding: 2px 4px; border-radius: 4px;
-        }
-        
+        .p-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .p-icon.filled { border-style: solid; border-color: var(--gold); }
+
         .p-name {
-            margin-top: -8px;
-            background: rgba(0,0,0,0.8);
-            color: white; border: 1px solid #444;
-            padding: 2px 6px; border-radius: 4px;
-            font-size: 0.7rem; font-family: 'Rajdhani';
-            white-space: nowrap; max-width: 120%; overflow: hidden;
-            text-align: center;
-            backdrop-filter: blur(2px);
+            margin-top: 5px; background: rgba(0,0,0,0.8); font-size: 0.7rem;
+            padding: 2px 6px; border-radius: 4px; white-space: nowrap;
+            max-width: 120%; overflow: hidden;
         }
 
-        .empty .p-avatar { border: 2px dashed rgba(255,255,255,0.3); background: transparent; display: flex; justify-content: center; align-items: center; }
-        .empty i { color: rgba(255,255,255,0.3); font-size: 1.2rem; }
-        .empty .p-name { display: none; }
-
-        /* BANCO DE RESERVAS */
-        .bench-container {
-            margin-top: 15px;
-            display: flex; gap: 8px;
-            background: rgba(0,0,0,0.5);
-            padding: 10px 20px; border-radius: 12px;
-            border: 1px solid var(--border);
-            backdrop-filter: blur(5px);
-        }
-        .bench-slot {
-            width: 45px; height: 60px;
-            border: 1px dashed rgba(255,255,255,0.2);
-            border-radius: 6px;
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; position: relative;
-        }
-        .bench-slot:hover { border-color: var(--gold); background: rgba(255,255,255,0.1); }
-        .bench-label { font-size: 0.6rem; color: #666; position: absolute; bottom: 2px; }
-        /* Ajuste do card no banco */
-        .bench-slot .player-card { position: relative; width: 100%; transform: none; top:0; left:0; height: 100%; justify-content: center; }
-        .bench-slot .p-name { display: none; } /* Sem nome no banco pra economizar espaço */
-        .bench-slot .p-avatar { width: 35px; height: 35px; }
-
-        /* PAINEL LATERAL */
-        .sidebar {
-            width: 300px;
-            background: var(--panel-bg);
-            border-left: 1px solid var(--border);
-            padding: 20px;
-            display: flex; flex-direction: column; gap: 20px;
-        }
-        
-        .stat-box {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border);
-            padding: 15px; border-radius: 8px;
-        }
-        .stat-title { color: var(--gold); font-family: 'Rajdhani'; font-size: 1.2rem; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        
-        .stat-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; color: #ccc; }
-        .stat-val { font-weight: bold; color: white; }
-        .chem-val { color: var(--accent); }
-
-        /* MODAL DE BUSCA */
-        .modal-overlay {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.8); z-index: 100;
-            display: none; justify-content: center; align-items: center;
-            opacity: 0; transition: 0.3s;
-        }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        
+        /* MODAL */
         .modal {
-            width: 90%; max-width: 400px; height: 80%;
-            background: #111; border: 1px solid var(--gold);
-            border-radius: 12px; display: flex; flex-direction: column;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            display: none; flex-direction: column; z-index: 200; padding: 20px;
         }
-        .modal-header { padding: 15px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .modal-body { flex: 1; overflow-y: auto; padding: 10px; }
-        
-        .search-bar { width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 6px; outline: none; margin-bottom: 10px; }
+        .modal.active { display: flex; }
+
+        .search-box {
+            width: 100%; padding: 15px; background: #111; border: 1px solid var(--gold);
+            color: white; border-radius: 8px; margin-bottom: 20px; outline: none;
+        }
+
+        .player-list { flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr; gap: 10px; }
         
         .list-item {
-            display: flex; align-items: center; padding: 10px;
-            border-bottom: 1px solid #222; cursor: pointer; transition: 0.2s;
+            background: #1a1a1a; padding: 12px; border-radius: 8px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .list-item:hover { background: #222; border-left: 3px solid var(--gold); }
-        .li-img { width: 40px; height: 40px; border-radius: 50%; background: #333; margin-right: 15px; overflow: hidden; }
-        .li-info h4 { font-size: 0.9rem; color: white; }
-        .li-info p { font-size: 0.75rem; color: #888; }
-        .li-pos { margin-left: auto; font-size: 0.8rem; font-weight: bold; color: var(--gold); }
+        .list-item:hover { background: #252525; }
+        .player-info h4 { font-size: 0.9rem; margin-bottom: 2px; }
+        .player-info span { font-size: 0.7rem; color: #888; }
+        .add-btn { color: var(--gold); font-weight: bold; font-size: 1.2rem; }
 
-        /* ÁREA DE EXPORTAÇÃO (Invisível) */
-        #export-canvas {
-            position: fixed; top: -9999px; left: -9999px;
-            width: 1080px; height: 1350px; /* Formato Instagram Vertical */
-            background: linear-gradient(180deg, #111 0%, #000 100%);
-            display: flex; flex-direction: column; align-items: center;
-            font-family: 'Rajdhani';
-            padding: 60px;
-        }
-        .ex-logo { font-size: 4rem; color: var(--gold); margin-bottom: 30px; letter-spacing: 5px; font-weight: bold; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
-        .ex-pitch-wrap { position: relative; width: 900px; height: 1100px; }
-        .ex-pitch { width: 100%; height: 100%; background: #183818; border: 5px solid white; border-radius: 30px; position: relative; }
-        .ex-footer { margin-top: 30px; color: #666; font-size: 1.5rem; text-transform: uppercase; }
+        /* SIDEBAR */
+        .sidebar { width: 300px; background: var(--panel); border-left: 1px solid var(--border); padding: 20px; }
+        .bench { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+        .bench-slot { aspect-ratio: 1; border: 1px dashed #444; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-        /* Responsividade Mobile */
         @media (max-width: 800px) {
-            .main-layout { flex-direction: column; overflow-y: auto; }
-            .pitch-container { height: 60vh; width: 90%; }
-            .sidebar { width: 100%; height: auto; padding: 15px; }
-            .bench-container { width: 95%; justify-content: center; }
+            .main-container { flex-direction: column; overflow-y: auto; }
+            .sidebar { width: 100%; border: none; border-top: 1px solid var(--border); }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand"><i class="fas fa-shield-alt"></i> FUT MASTER</div>
-        <div class="controls">
-            <select id="formationSelect" onchange="changeFormation()">
-                <option value="4-3-3">4-3-3 Ofensivo</option>
-                <option value="4-4-2">4-4-2 Clássico</option>
-                <option value="3-5-2">3-5-2</option>
-                <option value="4-2-3-1">4-2-3-1</option>
-            </select>
-            <button class="btn" onclick="resetAll()"><i class="fas fa-trash"></i></button>
-            <button class="btn btn-download" onclick="downloadSquad()">
-                <i class="fas fa-download"></i> BAIXAR HD
-            </button>
-        </div>
-    </header>
-
-    <div class="main-layout">
-        <div class="pitch-area">
-            <div class="pitch-container">
-                <div class="pitch" id="pitch">
-                    <div class="line mid-line"></div>
-                    <div class="line center-circle"></div>
-                    <div class="line box-top"></div>
-                    <div class="line box-bottom"></div>
-                    </div>
-            </div>
-
-            <div class="bench-container" id="benchList">
-                </div>
-        </div>
-
-        <aside class="sidebar">
-            <div class="stat-box">
-                <div class="stat-title">RESUMO DO TIME</div>
-                <div class="stat-row">
-                    <span>Rating Geral</span>
-                    <span class="stat-val" id="teamRating">0</span>
-                </div>
-                <div class="stat-row">
-                    <span>Química</span>
-                    <span class="chem-val" id="teamChem">0%</span>
-                </div>
-            </div>
-            
-            <div class="stat-box">
-                <div class="stat-title">INFORMAÇÕES</div>
-                <div style="font-size:0.8rem; color:#aaa; line-height:1.6">
-                    • Clique nos slots (+) para adicionar.<br>
-                    • Use o botão "Baixar HD" para gerar um pôster.<br>
-                    • O campo se ajusta à sua tela automaticamente.
-                </div>
-            </div>
-        </aside>
+<header>
+    <div class="logo">FUT MASTER 2026</div>
+    <div class="controls">
+        <select id="formation" class="btn" onchange="changeFormation()">
+            <option value="433">4-3-3</option>
+            <option value="442">4-4-2</option>
+            <option value="352">3-5-2</option>
+        </select>
+        <button class="btn btn-save" onclick="downloadImage()">BAIXAR</button>
     </div>
+</header>
 
-    <div class="modal-overlay" id="modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 style="color:white; font-family:'Rajdhani'">ESCOLHER JOGADOR</h3>
-                <button onclick="closeModal()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer">&times;</button>
-            </div>
-            <div class="modal-body">
-                <input type="text" class="search-bar" id="searchInput" placeholder="Buscar por nome ou time..." onkeyup="renderPlayerList()">
-                <div id="playerList"></div>
-            </div>
+<div class="main-container">
+    <div class="pitch-area">
+        <div class="pitch" id="capture">
+            <div class="line mid-line"></div>
+            <div class="line center-circle"></div>
+            <div id="players-root"></div>
         </div>
     </div>
 
-    <div id="export-canvas">
-        <div class="ex-logo">FUT MASTER 2026</div>
-        <div class="ex-pitch-wrap">
-            <div class="ex-pitch" id="exportPitch">
-                <div class="line mid-line"></div>
-                <div class="line center-circle"></div>
-                <div class="line box-top"></div>
-                <div class="line box-bottom"></div>
+    <aside class="sidebar">
+        <h3>RESERVAS</h3>
+        <div class="bench" id="bench-root"></div>
+    </aside>
+</div>
+
+<div class="modal" id="modal">
+    <input type="text" class="search-box" id="search" placeholder="Busque jogador ou time (ex: Flamengo)..." onkeyup="renderList()">
+    <div class="player-list" id="list"></div>
+    <button class="btn" style="margin-top:10px" onclick="closeModal()">FECHAR</button>
+</div>
+
+<script>
+    // === BANCO DE DADOS ATUALIZADO 2026 ===
+    const database = [
+        // PALMEIRAS
+        {n: "Carlos Miguel", t: "Palmeiras", p: "GOL"}, {n: "Marcelo Lomba", t: "Palmeiras", p: "GOL"},
+        {n: "Murilo", t: "Palmeiras", p: "ZAG"}, {n: "Gustavo Gómez", t: "Palmeiras", p: "ZAG"}, {n: "Bruno Fuchs", t: "Palmeiras", p: "ZAG"},
+        {n: "Agustín Giay", t: "Palmeiras", p: "LD"}, {n: "Khellven", t: "Palmeiras", p: "LD"},
+        {n: "Joaquín Piquerez", t: "Palmeiras", p: "LE"}, {n: "Jefté", t: "Palmeiras", p: "LE"},
+        {n: "Emiliano Martínez", t: "Palmeiras", p: "VOL"}, {n: "Marlon Freitas", t: "Palmeiras", p: "VOL"},
+        {n: "Andreas Pereira", t: "Palmeiras", p: "MEI"}, {n: "Mauricio", t: "Palmeiras", p: "MEI"},
+        {n: "Jhon Arias", t: "Palmeiras", p: "ATA"}, {n: "Felipe Anderson", t: "Palmeiras", p: "ATA"}, {n: "Ramón Sosa", t: "Palmeiras", p: "ATA"},
+        {n: "Vitor Roque", t: "Palmeiras", p: "CA"}, {n: "Flaco López", t: "Palmeiras", p: "CA"},
+
+        // CORINTHIANS
+        {n: "Hugo Souza", t: "Corinthians", p: "GOL"}, {n: "Matheus Donelli", t: "Corinthians", p: "GOL"},
+        {n: "André Ramalho", t: "Corinthians", p: "ZAG"}, {n: "Cacá", t: "Corinthians", p: "ZAG"}, {n: "Gabriel Paulista", t: "Corinthians", p: "ZAG"},
+        {n: "Matheuzinho", t: "Corinthians", p: "LD"}, {n: "Hugo", t: "Corinthians", p: "LE"},
+        {n: "Raniele", t: "Corinthians", p: "VOL"}, {n: "Charles", t: "Corinthians", p: "VOL"},
+        {n: "Rodrigo Garro", t: "Corinthians", p: "MEI"}, {n: "Matheus Pereira", t: "Corinthians", p: "MEI"},
+        {n: "Yuri Alberto", t: "Corinthians", p: "CA"}, {n: "Memphis Depay", t: "Corinthians", p: "CA"},
+
+        // SÃO PAULO
+        {n: "Carlos Coronel", t: "São Paulo", p: "GOL"}, {n: "Rafael", t: "São Paulo", p: "GOL"},
+        {n: "Nahuel Ferraresi", t: "São Paulo", p: "ZAG"}, {n: "Alan Franco", t: "São Paulo", p: "ZAG"}, {n: "Rafael Tolói", t: "São Paulo", p: "ZAG"},
+        {n: "Cédric Soares", t: "São Paulo", p: "LD"}, {n: "Wendell", t: "São Paulo", p: "LE"}, {n: "Enzo Díaz", t: "São Paulo", p: "LE"},
+        {n: "Pablo Maia", t: "São Paulo", p: "VOL"}, {n: "Oscar", t: "São Paulo", p: "MEI"},
+        {n: "Lucas Moura", t: "São Paulo", p: "ATA"}, {n: "Ferreirinha", t: "São Paulo", p: "ATA"},
+        {n: "Jonathan Calleri", t: "São Paulo", p: "CA"}, {n: "Luciano", t: "São Paulo", p: "CA"},
+
+        // FLAMENGO
+        {n: "Agustín Rossi", t: "Flamengo", p: "GOL"}, {n: "Léo Pereira", t: "Flamengo", p: "ZAG"}, {n: "Léo Ortiz", t: "Flamengo", p: "ZAG"},
+        {n: "Vitão", t: "Flamengo", p: "ZAG"}, {n: "Emerson Royal", t: "Flamengo", p: "LD"}, {n: "Ayrton Lucas", t: "Flamengo", p: "LE"},
+        {n: "Erick Pulgar", t: "Flamengo", p: "VOL"}, {n: "Lucas Paquetá", t: "Flamengo", p: "MEI"},
+        {n: "Arrascaeta", t: "Flamengo", p: "MEI"}, {n: "De La Cruz", t: "Flamengo", p: "MEI"},
+        {n: "Samuel Lino", t: "Flamengo", p: "ATA"}, {n: "Everton Cebolinha", t: "Flamengo", p: "ATA"}, {n: "Pedro", t: "Flamengo", p: "CA"},
+
+        // BOTAFOGO
+        {n: "Léo Linck", t: "Botafogo", p: "GOL"}, {n: "Neto", t: "Botafogo", p: "GOL"},
+        {n: "Alexander Barboza", t: "Botafogo", p: "ZAG"}, {n: "Bastos", t: "Botafogo", p: "ZAG"},
+        {n: "Vitinho", t: "Botafogo", p: "LD"}, {n: "Alex Telles", t: "Botafogo", p: "LE"},
+        {n: "Danilo", t: "Botafogo", p: "VOL"}, {n: "Almada", t: "Botafogo", p: "MEI"},
+        {n: "Artur", t: "Botafogo", p: "ATA"}, {n: "Matheus Martins", t: "Botafogo", p: "ATA"}, {n: "Igor Jesus", t: "Botafogo", p: "CA"},
+
+        // FLUMINENSE
+        {n: "Fábio", t: "Fluminense", p: "GOL"}, {n: "Ignácio", t: "Fluminense", p: "ZAG"}, {n: "Igor Rabello", t: "Fluminense", p: "ZAG"},
+        {n: "Samuel Xavier", t: "Fluminense", p: "LD"}, {n: "Guilherme Arana", t: "Fluminense", p: "LE"},
+        {n: "Martinelli", t: "Fluminense", p: "VOL"}, {n: "Ganso", t: "Fluminense", p: "MEI"},
+        {n: "Soteldo", t: "Fluminense", p: "ATA"}, {n: "Germán Cano", t: "Fluminense", p: "CA"},
+
+        // GRÊMIO
+        {n: "Weverton", t: "Grêmio", p: "GOL"}, {n: "Wagner Leonardo", t: "Grêmio", p: "ZAG"}, {n: "Walter Kannemann", t: "Grêmio", p: "ZAG"},
+        {n: "João Pedro", t: "Grêmio", p: "LD"}, {n: "Mathías Villasanti", t: "Grêmio", p: "VOL"},
+        {n: "Arthur Melo", t: "Grêmio", p: "MEI"}, {n: "Franco Cristaldo", t: "Grêmio", p: "MEI"},
+        {n: "Martin Braithwaite", t: "Grêmio", p: "CA"},
+
+        // VASCO
+        {n: "Léo Jardim", t: "Vasco", p: "GOL"}, {n: "Robert Renan", t: "Vasco", p: "ZAG"}, {n: "Carlos Cuesta", t: "Vasco", p: "ZAG"},
+        {n: "Paulo Henrique", t: "Vasco", p: "LD"}, {n: "Lucas Piton", t: "Vasco", p: "LE"},
+        {n: "Philippe Coutinho", t: "Vasco", p: "MEI"}, {n: "Adson", t: "Vasco", p: "ATA"}
+    ];
+
+    const formations = {
+        "433": [
+            {t:85, l:50}, {t:70, l:20}, {t:72, l:40}, {t:72, l:60}, {t:70, l:80},
+            {t:45, l:30}, {t:50, l:50}, {t:45, l:70},
+            {t:20, l:20}, {t:15, l:50}, {t:20, l:80}
+        ],
+        "442": [
+            {t:85, l:50}, {t:70, l:15}, {t:72, l:38}, {t:72, l:62}, {t:70, l:85},
+            {t:45, l:15}, {t:45, l:38}, {t:45, l:62}, {t:45, l:85},
+            {t:15, l:35}, {t:15, l:65}
+        ]
+    };
+
+    let selectedSlot = null;
+    let currentFormation = "433";
+    let team = {};
+
+    function init() {
+        changeFormation();
+        renderBenchSlots();
+    }
+
+    function changeFormation() {
+        currentFormation = document.getElementById('formation').value;
+        const root = document.getElementById('players-root');
+        root.innerHTML = '';
+        formations[currentFormation].forEach((pos, i) => {
+            const slot = document.createElement('div');
+            slot.className = 'player-slot';
+            slot.style.top = pos.t + '%';
+            slot.style.left = pos.l + '%';
+            slot.onclick = () => openModal('p' + i);
+            
+            const player = team['p'+i];
+            slot.innerHTML = `
+                <div class="p-icon ${player ? 'filled' : ''}">
+                    ${player ? `<img src="https://ui-avatars.com/api/?name=${player.n}&background=random&color=fff">` : '<i class="fa fa-plus"></i>'}
                 </div>
-        </div>
-        <div class="ex-footer">Dream Team Official Squad</div>
-    </div>
+                <div class="p-name">${player ? player.n : '---'}</div>
+            `;
+            root.appendChild(slot);
+        });
+    }
 
-    <script>
-        // --- BANCO DE DADOS COMPLETO ---
-        const playersDB = [
-             // PALMEIRAS
-            { name: "Carlos Miguel", team: "Palmeiras", pos: ["GOL"] },
-            { name: "Murilo", team: "Palmeiras", pos: ["ZAG"] },
-            { name: "Gustavo Gómez", team: "Palmeiras", pos: ["ZAG"] },
-            { name: "Piquerez", team: "Palmeiras", pos: ["LAT"] },
-            { name: "Marlon Freitas", team: "Palmeiras", pos: ["VOL"] },
-            { name: "Aníbal Moreno", team: "Palmeiras", pos: ["VOL"] },
-            { name: "Raphael Veiga", team: "Palmeiras", pos: ["MEI"] },
-            { name: "Mauricio", team: "Palmeiras", pos: ["MEI"] },
-            { name: "Estêvão", team: "Palmeiras", pos: ["ATA"] },
-            { name: "Felipe Anderson", team: "Palmeiras", pos: ["ATA"] },
-            { name: "Flaco López", team: "Palmeiras", pos: ["CA"] },
-            { name: "Rony", team: "Palmeiras", pos: ["ATA"] },
-            // CORINTHIANS
-            { name: "Hugo Souza", team: "Corinthians", pos: ["GOL"] },
-            { name: "André Ramalho", team: "Corinthians", pos: ["ZAG"] },
-            { name: "Fagner", team: "Corinthians", pos: ["LAT"] },
-            { name: "Rodrigo Garro", team: "Corinthians", pos: ["MEI"] },
-            { name: "Memphis Depay", team: "Corinthians", pos: ["ATA"] },
-            { name: "Yuri Alberto", team: "Corinthians", pos: ["CA"] },
-            // SÃO PAULO
-            { name: "Rafael", team: "São Paulo", pos: ["GOL"] },
-            { name: "Arboleda", team: "São Paulo", pos: ["ZAG"] },
-            { name: "Lucas Moura", team: "São Paulo", pos: ["ATA"] },
-            { name: "Calleri", team: "São Paulo", pos: ["CA"] },
-            { name: "Luciano", team: "São Paulo", pos: ["CA"] },
-            // FLAMENGO
-            { name: "Rossi", team: "Flamengo", pos: ["GOL"] },
-            { name: "Léo Ortiz", team: "Flamengo", pos: ["ZAG"] },
-            { name: "De La Cruz", team: "Flamengo", pos: ["MEI"] },
-            { name: "Arrascaeta", team: "Flamengo", pos: ["MEI"] },
-            { name: "Pedro", team: "Flamengo", pos: ["CA"] },
-            { name: "Gabigol", team: "Flamengo", pos: ["CA"] },
-            { name: "Gerson", team: "Flamengo", pos: ["VOL"] },
-            // BOTAFOGO
-            { name: "John", team: "Botafogo", pos: ["GOL"] },
-            { name: "Bastos", team: "Botafogo", pos: ["ZAG"] },
-            { name: "Luiz Henrique", team: "Botafogo", pos: ["ATA"] },
-            { name: "Igor Jesus", team: "Botafogo", pos: ["ATA"] },
-            { name: "Almada", team: "Botafogo", pos: ["MEI"] },
-            // FLUMINENSE
-            { name: "Fábio", team: "Fluminense", pos: ["GOL"] },
-            { name: "Thiago Silva", team: "Fluminense", pos: ["ZAG"] },
-            { name: "Ganso", team: "Fluminense", pos: ["MEI"] },
-            { name: "Arias", team: "Fluminense", pos: ["ATA"] },
-            { name: "Cano", team: "Fluminense", pos: ["CA"] },
-            // VASCO
-            { name: "Léo Jardim", team: "Vasco", pos: ["GOL"] },
-            { name: "Vegetti", team: "Vasco", pos: ["CA"] },
-            { name: "Coutinho", team: "Vasco", pos: ["MEI"] },
-            { name: "Payet", team: "Vasco", pos: ["MEI"] },
-            // GRÊMIO & INTER
-            { name: "Marchesín", team: "Grêmio", pos: ["GOL"] },
-            { name: "Braithwaite", team: "Grêmio", pos: ["CA"] },
-            { name: "Rochet", team: "Internacional", pos: ["GOL"] },
-            { name: "Borré", team: "Internacional", pos: ["CA"] },
-            { name: "Alan Patrick", team: "Internacional", pos: ["MEI"] },
-            // CRUZEIRO & GALO
-            { name: "Cássio", team: "Cruzeiro", pos: ["GOL"] },
-            { name: "Matheus Pereira", team: "Cruzeiro", pos: ["MEI"] },
-            { name: "Hulk", team: "Atlético-MG", pos: ["ATA"] },
-            { name: "Paulinho", team: "Atlético-MG", pos: ["ATA"] },
-            { name: "Scarpa", team: "Atlético-MG", pos: ["MEI"] }
-        ];
-
-        // --- LÓGICA DO SISTEMA ---
-        
-        // Configurações de Formação (Top%, Left%, Role)
-        const formations = {
-            '4-3-3': [
-                {t: 85, l: 50, r:'GOL'}, 
-                {t: 70, l: 15, r:'LAT'}, {t: 72, l: 37, r:'ZAG'}, {t: 72, l: 63, r:'ZAG'}, {t: 70, l: 85, r:'LAT'},
-                {t: 50, l: 50, r:'VOL'}, {t: 40, l: 30, r:'MEI'}, {t: 40, l: 70, r:'MEI'},
-                {t: 18, l: 15, r:'ATA'}, {t: 15, l: 50, r:'CA'}, {t: 18, l: 85, r:'ATA'}
-            ],
-            '4-4-2': [
-                {t: 85, l: 50, r:'GOL'},
-                {t: 70, l: 15, r:'LAT'}, {t: 72, l: 37, r:'ZAG'}, {t: 72, l: 63, r:'ZAG'}, {t: 70, l: 85, r:'LAT'},
-                {t: 45, l: 20, r:'MEI'}, {t: 50, l: 40, r:'VOL'}, {t: 50, l: 60, r:'VOL'}, {t: 45, l: 80, r:'MEI'},
-                {t: 15, l: 35, r:'ATA'}, {t: 15, l: 65, r:'ATA'}
-            ],
-            '3-5-2': [
-                {t: 88, l: 50, r:'GOL'},
-                {t: 75, l: 20, r:'ZAG'}, {t: 78, l: 50, r:'ZAG'}, {t: 75, l: 80, r:'ZAG'},
-                {t: 50, l: 10, r:'LAT'}, {t: 55, l: 35, r:'VOL'}, {t: 55, l: 65, r:'VOL'}, {t: 50, l: 90, r:'LAT'},
-                {t: 35, l: 50, r:'MEI'},
-                {t: 15, l: 35, r:'ATA'}, {t: 15, l: 65, r:'ATA'}
-            ],
-            '4-2-3-1': [
-                {t: 88, l: 50, r:'GOL'},
-                {t: 75, l: 15, r:'LAT'}, {t: 75, l: 35, r:'ZAG'}, {t: 75, l: 65, r:'ZAG'}, {t: 75, l: 85, r:'LAT'},
-                {t: 55, l: 40, r:'VOL'}, {t: 55, l: 60, r:'VOL'},
-                {t: 35, l: 20, r:'MEI'}, {t: 30, l: 50, r:'MEI'}, {t: 35, l: 80, r:'MEI'},
-                {t: 12, l: 50, r:'CA'}
-            ]
-        };
-
-        let squad = {}; // Armazena o time atual
-        let activeSlot = null; // Qual slot foi clicado
-        let activeType = 'pitch'; // 'pitch' ou 'bench'
-
-        function init() {
-            renderPitch();
-            renderBench();
-            updateStats();
+    function renderBenchSlots() {
+        const root = document.getElementById('bench-root');
+        root.innerHTML = '';
+        for(let i=0; i<6; i++) {
+            const player = team['b'+i];
+            const div = document.createElement('div');
+            div.className = 'bench-slot';
+            div.onclick = () => openModal('b' + i);
+            div.innerHTML = player ? `<img src="https://ui-avatars.com/api/?name=${player.n}&background=random&color=fff" style="width:100%; border-radius:8px">` : '<i class="fa fa-plus"></i>';
+            root.appendChild(div);
         }
+    }
 
-        // Renderiza o Campo
-        function renderPitch() {
-            const pitch = document.getElementById('pitch');
-            // Limpa jogadores antigos
-            pitch.querySelectorAll('.player-card').forEach(e => e.remove());
+    function openModal(slotId) {
+        selectedSlot = slotId;
+        document.getElementById('modal').classList.add('active');
+        renderList();
+    }
 
-            const fmt = document.getElementById('formationSelect').value;
-            const layout = formations[fmt];
+    function closeModal() {
+        document.getElementById('modal').classList.remove('active');
+    }
 
-            layout.forEach((pos, i) => {
-                const p = squad[`pitch-${i}`];
-                const card = createCard(p, pos.r);
-                
-                // Posicionamento
-                card.style.top = pos.t + '%';
-                card.style.left = pos.l + '%';
-                
-                card.onclick = () => openModal(i, 'pitch');
-                pitch.appendChild(card);
-            });
-        }
+    function renderList() {
+        const term = document.getElementById('search').value.toLowerCase();
+        const list = document.getElementById('list');
+        list.innerHTML = '';
 
-        // Renderiza o Banco
-        function renderBench() {
-            const bench = document.getElementById('benchList');
-            bench.innerHTML = '';
-            for(let i=0; i<7; i++) {
-                const slot = document.createElement('div');
-                slot.className = 'bench-slot';
-                
-                const p = squad[`bench-${i}`];
-                if(p) {
-                    const card = createCard(p, 'RES');
-                    slot.appendChild(card);
-                } else {
-                    slot.innerHTML = `<span class="bench-label">RES</span><i class="fas fa-plus" style="color:#555"></i>`;
-                }
-                
-                slot.onclick = () => openModal(i, 'bench');
-                bench.appendChild(slot);
-            }
-        }
+        const filtered = database.filter(p => 
+            p.n.toLowerCase().includes(term) || p.t.toLowerCase().includes(term)
+        );
 
-        function createCard(player, role) {
-            const el = document.createElement('div');
-            el.className = 'player-card' + (player ? '' : ' empty');
-            
-            if(player) {
-                el.innerHTML = `
-                    <div class="p-badge">${role}</div>
-                    <div class="p-avatar">
-                        <img src="https://ui-avatars.com/api/?name=${player.name}&background=random&color=fff&size=128">
-                    </div>
-                    <div class="p-name">${player.name.split(' ')[0]}</div>
-                `;
-            } else {
-                el.innerHTML = `
-                    <div class="p-avatar"><i class="fas fa-plus"></i></div>
-                    <div class="p-name"></div>
-                `;
-            }
-            return el;
-        }
+        filtered.forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'list-item';
+            div.innerHTML = `
+                <div class="player-info">
+                    <h4>${p.n}</h4>
+                    <span>${p.t} • ${p.p}</span>
+                </div>
+                <div class="add-btn"><i class="fa fa-plus-circle"></i></div>
+            `;
+            div.onclick = () => {
+                team[selectedSlot] = p;
+                closeModal();
+                changeFormation();
+                renderBenchSlots();
+            };
+            list.appendChild(div);
+        });
+    }
 
-        // --- MODAL ---
-        function openModal(idx, type) {
-            activeSlot = idx;
-            activeType = type;
-            document.getElementById('modal').classList.add('active');
-            document.getElementById('searchInput').value = '';
-            renderPlayerList();
-        }
+    async function downloadImage() {
+        const el = document.getElementById('capture');
+        const canvas = await html2canvas(el);
+        const link = document.createElement('a');
+        link.download = 'meu-time-2026.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    }
 
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
-
-        function renderPlayerList() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            const list = document.getElementById('playerList');
-            list.innerHTML = '';
-
-            // Opção Remover
-            if(squad[`${activeType}-${activeSlot}`]) {
-                const rm = document.createElement('div');
-                rm.className = 'list-item';
-                rm.innerHTML = '<div style="color:red; text-align:center; width:100%"><i class="fas fa-trash"></i> Remover Jogador</div>';
-                rm.onclick = () => selectPlayer(null);
-                list.appendChild(rm);
-            }
-
-            playersDB.forEach(p => {
-                if(p.name.toLowerCase().includes(term) || p.team.toLowerCase().includes(term)) {
-                    // Evita duplicatas (exceto se for o mesmo slot)
-                    const isUsed = Object.entries(squad).some(([k, v]) => v && v.name === p.name && k !== `${activeType}-${activeSlot}`);
-                    if(isUsed) return;
-
-                    const item = document.createElement('div');
-                    item.className = 'list-item';
-                    item.innerHTML = `
-                        <div class="li-img">
-                            <img src="https://ui-avatars.com/api/?name=${p.name}&background=random&color=fff" style="width:100%">
-                        </div>
-                        <div class="li-info">
-                            <h4>${p.name}</h4>
-                            <p>${p.team}</p>
-                        </div>
-                        <div class="li-pos">${p.pos[0]}</div>
-                    `;
-                    item.onclick = () => selectPlayer(p);
-                    list.appendChild(item);
-                }
-            });
-        }
-
-        function selectPlayer(p) {
-            squad[`${activeType}-${activeSlot}`] = p;
-            closeModal();
-            renderPitch();
-            renderBench();
-            updateStats();
-        }
-
-        function changeFormation() {
-            // Mantém os jogadores nos slots se possível
-            renderPitch();
-        }
-
-        function resetAll() {
-            if(confirm('Apagar todo o time?')) {
-                squad = {};
-                renderPitch();
-                renderBench();
-                updateStats();
-            }
-        }
-
-        // --- ESTATÍSTICAS ---
-        function updateStats() {
-            const players = Object.values(squad).filter(p => p);
-            const count = players.length;
-            
-            // Rating Fictício
-            const rating = count > 0 ? 75 + Math.floor(count * 1.5) : 0;
-            
-            // Química Simples
-            const teams = {};
-            players.forEach(p => teams[p.team] = (teams[p.team] || 0) + 1);
-            let syn = 0;
-            Object.values(teams).forEach(n => { if(n > 1) syn += n * 10; });
-            const chem = Math.min(100, (count * 5) + syn);
-
-            document.getElementById('teamRating').innerText = rating > 99 ? 99 : rating;
-            document.getElementById('teamChem').innerText = chem + '%';
-        }
-
-        // --- DOWNLOAD PODEROSO ---
-        function downloadSquad() {
-            const btn = document.querySelector('.btn-download');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GERANDO...';
-
-            // 1. Prepara o Canvas Oculto
-            const exContainer = document.getElementById('exportPitch');
-            // Remove antigos clones
-            exContainer.querySelectorAll('.player-card').forEach(e => e.remove());
-
-            const fmt = document.getElementById('formationSelect').value;
-            const layout = formations[fmt];
-
-            // 2. Clona os jogadores para o layout de exportação (Escala Maior)
-            layout.forEach((pos, i) => {
-                const p = squad[`pitch-${i}`];
-                if(p) {
-                    const card = createCard(p, pos.r);
-                    card.style.top = pos.t + '%';
-                    card.style.left = pos.l + '%';
-                    card.style.transform = 'translate(-50%, -50%) scale(1.6)'; // Aumenta tamanho para o poster
-                    card.querySelector('.p-name').style.fontSize = '1rem';
-                    card.querySelector('.p-name').style.padding = '4px 10px';
-                    exContainer.appendChild(card);
-                }
-            });
-
-            // 3. Tira o print da div oculta
-            html2canvas(document.getElementById('export-canvas'), {
-                scale: 1, // Já é HD pelo CSS (1080px width)
-                useCORS: true,
-                backgroundColor: null
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'MEU-FUT-SQUAD.png';
-                link.href = canvas.toDataURL("image/png");
-                link.click();
-                btn.innerHTML = '<i class="fas fa-download"></i> BAIXAR HD';
-            });
-        }
-
-        // Inicia
-        init();
-    </script>
+    init();
+</script>
 </body>
 </html>
