@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Fut 2026 | Elenco Completo</title>
+    <title>Fut 2026 | Ultimate Edition</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Teko:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
@@ -42,7 +43,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--glass-border);
             z-index: 20;
@@ -64,17 +65,19 @@
             background: rgba(255,255,255,0.08);
             border: 1px solid var(--glass-border);
             color: white;
-            padding: 6px 15px;
+            padding: 8px 15px;
             border-radius: 6px;
             font-family: 'Outfit';
             cursor: pointer;
             outline: none;
             transition: 0.3s;
+            font-weight: bold;
         }
         button.action-btn:hover { background: var(--primary); color: black; border-color: var(--primary); }
-        select:hover { border-color: var(--primary); }
+        .download-btn { background: var(--accent) !important; border-color: var(--accent) !important; }
+        .download-btn:hover { background: #ff3377 !important; color: white !important; }
 
-        /* --- LAYOUT PRINCIPAL (DIVIDIDO) --- */
+        /* --- LAYOUT PRINCIPAL --- */
         .main-layout {
             display: flex;
             flex: 1;
@@ -82,34 +85,37 @@
             overflow: hidden;
         }
 
-        /* Lado Esquerdo: O Campo */
-        .pitch-section {
+        /* ÁREA DE CAPTURA (CAMPO + BANCO) */
+        .capture-zone {
             flex: 2;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
+            background: transparent; /* Importante para o print ficar limpo */
         }
 
         .pitch-container {
             perspective: 1000px;
             width: 100%;
-            height: 100%;
+            height: 75%; /* Espaço para o campo */
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-end;
+            padding-bottom: 20px;
         }
 
         .pitch {
-            width: 380px; 
-            height: 520px;
+            width: 360px; 
+            height: 480px;
             background: 
-                linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+                linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
                 repeating-linear-gradient(0deg, #1a4f1a, #1a4f1a 10%, #225e22 10%, #225e22 20%);
             border-radius: 8px;
             position: relative;
-            transform: rotateX(15deg);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 4px rgba(255,255,255,0.1);
+            transform: rotateX(10deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 0 4px rgba(255,255,255,0.1);
             border: 2px solid rgba(255,255,255,0.6);
             transition: transform 0.4s ease;
         }
@@ -121,15 +127,52 @@
         .box-top { width: 50%; height: 13%; top: 0; left: 25%; border-top: none; }
         .box-bottom { width: 50%; height: 13%; bottom: 0; left: 25%; border-bottom: none; }
 
-        /* Lado Direito: Decoração e Info */
+        /* BANCO DE RESERVAS */
+        .bench-container {
+            height: 20%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 10;
+        }
+
+        .bench-box {
+            background: rgba(0,0,0,0.6);
+            border: 1px solid var(--glass-border);
+            padding: 10px 20px;
+            border-radius: 15px;
+            display: flex;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .bench-slot {
+            width: 50px;
+            height: 70px;
+            position: relative;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px dashed rgba(255,255,255,0.2);
+            transition: 0.2s;
+        }
+        .bench-slot:hover { border-color: var(--primary); background: rgba(255,255,255,0.1); }
+        .bench-label {
+            position: absolute; bottom: -18px; width: 100%; 
+            text-align: center; font-size: 0.7rem; color: #888; font-family:'Teko';
+        }
+
+        /* DIREITA: INFO */
         .kits-section {
             flex: 1;
             min-width: 300px;
-            background: rgba(15, 15, 25, 0.8);
+            background: rgba(15, 15, 25, 0.85);
             border-left: 1px solid var(--glass-border);
             padding: 25px;
             overflow-y: auto;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -141,51 +184,52 @@
             color: var(--primary);
             border-bottom: 2px solid var(--glass-border);
             padding-bottom: 10px;
-            margin-bottom: 10px;
         }
 
-        /* Grid de Camisas (Decoração) */
-        .kits-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .kit-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
+        /* Painel de Status Calculado */
+        .stats-panel {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
             padding: 15px;
-            text-align: center;
-            transition: 0.3s;
-            cursor: pointer;
+            border: 1px solid var(--glass-border);
         }
-        .kit-card:hover { transform: translateY(-3px); border-color: var(--primary); background: rgba(255,255,255,0.1); }
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center; }
+        .stat-label { color: #aaa; font-size: 0.9rem; }
+        .stat-val { font-family: 'Teko'; font-size: 1.4rem; color: white; }
+        #teamRating { color: var(--primary); }
+        #teamChem { color: var(--accent); }
 
-        .kit-icon { font-size: 3rem; margin-bottom: 10px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
+        .kits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px; }
+        .kit-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 15px; text-align: center; transition: 0.3s; cursor: pointer; }
+        .kit-card:hover { transform: translateY(-3px); border-color: var(--primary); background: rgba(255,255,255,0.1); }
+        .kit-icon { font-size: 2.5rem; margin-bottom: 10px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
         
-        /* Cores das Camisas */
+        /* Cores Camisas */
         .kit-palmeiras { background: linear-gradient(to bottom, #006437, #006437); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .kit-flamengo { background: linear-gradient(to right, #c32a2a 50%, #111 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .kit-corinthians { background: linear-gradient(to bottom, #fff 40%, #111 100%); -webkit-text-fill-color: rgba(255,255,255,0.9); }
         .kit-saopaulo { background: linear-gradient(to right, #c32a2a 33%, #fff 33%, #fff 66%, #111 66%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .kit-gremio { background: linear-gradient(to right, #0d80bf 33%, #fff 33%, #fff 66%, #111 66%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .kit-botafogo { background: linear-gradient(to right, #111 50%, #fff 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .team-name { font-size: 0.8rem; font-weight: 500; color: #ccc; }
 
-        .team-name { font-size: 0.9rem; font-weight: 500; color: #ccc; }
-
-        /* --- CARD JOGADOR (Draggable) --- */
+        /* JOGADOR */
         .player-card {
             position: absolute;
-            width: 65px;
+            width: 60px;
             display: flex; flex-direction: column; align-items: center;
-            cursor: grab; transform: translate(-50%, -50%);
+            cursor: pointer; transform: translate(-50%, -50%);
             transition: transform 0.1s; z-index: 10;
         }
-        .player-card:active { cursor: grabbing; transform: translate(-50%, -50%) scale(1.1); z-index: 100; }
-
+        /* Ajuste para o banco */
+        .bench-slot .player-card {
+            position: relative; transform: none; top: 0; left: 0; width: 100%; height: 100%;
+            justify-content: center;
+        }
+        .bench-slot .pos-badge { top: 0; right: 0; }
+        
         .avatar-container {
-            width: 44px; height: 44px;
+            width: 42px; height: 42px;
             background: #222; border-radius: 50%;
             border: 2px solid white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
@@ -196,23 +240,24 @@
         .pos-badge {
             position: absolute; top: -5px; right: -5px;
             background: var(--bg-dark); color: var(--primary);
-            font-size: 0.6rem; font-weight: bold; padding: 2px 5px;
-            border-radius: 8px; border: 1px solid var(--primary); z-index: 2;
+            font-size: 0.6rem; font-weight: bold; padding: 2px 4px;
+            border-radius: 6px; border: 1px solid var(--primary); z-index: 2;
         }
         .info-box {
-            margin-top: -6px;
+            margin-top: -5px;
             background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(4px);
-            padding: 2px 6px; border-radius: 4px;
+            padding: 2px 5px; border-radius: 4px;
             border: 1px solid rgba(255,255,255,0.1);
-            text-align: center; min-width: 70px;
+            text-align: center; min-width: 60px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .p-name { font-family: 'Teko'; font-size: 0.85rem; line-height: 1; color: white; white-space: nowrap; }
+        .p-name { font-family: 'Teko'; font-size: 0.8rem; line-height: 1; color: white; }
         
-        .empty-card .avatar-container { background: rgba(0,0,0,0.4); border: 2px dashed rgba(255,255,255,0.3); }
+        .empty-card .avatar-container { background: rgba(0,0,0,0.3); border: 2px dashed rgba(255,255,255,0.3); }
         .empty-card .info-box { display: none; }
-        .empty-label { margin-top: 5px; background: var(--accent); color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; }
+        .empty-label { margin-top: 5px; background: var(--accent); color: white; padding: 1px 5px; border-radius: 3px; font-size: 0.6rem; }
 
-        /* --- SIDEBAR --- */
+        /* SIDEBAR */
         .sidebar {
             position: fixed; top: 0; right: -100%;
             width: 100%; max-width: 320px; height: 100%;
@@ -227,7 +272,6 @@
         .search-container { padding: 10px; }
         #searchInput { width: 100%; background: #222; border: 1px solid #444; color: white; padding: 10px; border-radius: 6px; outline: none; font-family: 'Outfit'; }
         .player-list { flex: 1; overflow-y: auto; padding: 0 10px 20px; }
-        
         .list-item { display: flex; align-items: center; background: #1f1f1f; margin-bottom: 8px; padding: 8px; border-radius: 6px; cursor: pointer; border-left: 3px solid transparent; transition: 0.2s; }
         .list-item:hover { background: #2a2a2a; border-left-color: var(--primary); }
         .list-img { width: 35px; height: 35px; border-radius: 50%; background: #333; margin-right: 10px; overflow: hidden; }
@@ -240,11 +284,12 @@
 
         @media (max-width: 800px) {
             .main-layout { flex-direction: column; overflow-y: auto; }
-            .pitch-section { min-height: 550px; flex: none; }
+            .capture-zone { height: auto; min-height: 600px; flex: none; justify-content: flex-start; padding-top: 10px; }
+            .pitch { width: 300px; height: 420px; }
+            .bench-container { height: auto; padding: 10px 0; }
+            .bench-slot { width: 40px; height: 60px; }
             .kits-section { width: 100%; flex: none; }
-            .pitch { width: 320px; height: 480px; }
         }
-
     </style>
 </head>
 <body>
@@ -254,7 +299,10 @@
             <i class="fas fa-shield-alt" style="color:var(--primary)"></i> FUT MASTER
         </div>
         <div class="controls">
-            <button class="action-btn" onclick="resetPositions()"><i class="fas fa-sync"></i></button>
+            <button class="action-btn download-btn" onclick="downloadSquad()">
+                <i class="fas fa-camera"></i> Baixar Time
+            </button>
+            <button class="action-btn" onclick="resetAll()"><i class="fas fa-trash"></i></button>
             <select id="formationSelect">
                 <option value="4-3-3">4-3-3 Ofensivo</option>
                 <option value="4-4-2">4-4-2 Clássico</option>
@@ -267,7 +315,8 @@
 
     <div class="main-layout">
         
-        <section class="pitch-section">
+        <section class="capture-zone" id="captureArea">
+            
             <div class="pitch-container">
                 <div class="pitch" id="pitch">
                     <div class="line mid-line"></div>
@@ -276,48 +325,54 @@
                     <div class="line box-bottom"></div>
                     </div>
             </div>
+
+            <div class="bench-container">
+                <div class="bench-box" id="benchList">
+                    </div>
+            </div>
+
         </section>
 
         <aside class="kits-section">
-            <div class="section-title">Clubes Brasileiros</div>
-            <p style="font-size:0.8rem; color:#888; margin-bottom:15px;">Use os kits para inspiração tática.</p>
+            <div class="section-title">Análise do Time</div>
             
-            <div class="kits-grid">
-                <div class="kit-card">
-                    <i class="fas fa-tshirt kit-icon kit-palmeiras"></i>
-                    <div class="team-name">Palmeiras</div>
+            <div class="stats-panel">
+                <div class="stat-row">
+                    <span class="stat-label">Rating Geral</span>
+                    <span class="stat-val" id="teamRating">0</span>
                 </div>
-                <div class="kit-card">
-                    <i class="fas fa-tshirt kit-icon kit-flamengo"></i>
-                    <div class="team-name">Flamengo</div>
+                <div class="stat-row">
+                    <span class="stat-label">Química</span>
+                    <span class="stat-val" id="teamChem">0%</span>
                 </div>
-                <div class="kit-card">
-                    <i class="fas fa-tshirt kit-icon kit-corinthians"></i>
-                    <div class="team-name">Corinthians</div>
-                </div>
-                <div class="kit-card">
-                    <i class="fas fa-tshirt kit-icon kit-saopaulo"></i>
-                    <div class="team-name">São Paulo</div>
-                </div>
-                <div class="kit-card">
-                    <i class="fas fa-tshirt kit-icon kit-gremio"></i>
-                    <div class="team-name">Grêmio</div>
-                </div>
-                <div class="kit-card">
-                    <i class="fas fa-tshirt kit-icon kit-botafogo"></i>
-                    <div class="team-name">Botafogo</div>
-                </div>
+                <div style="font-size:0.7rem; color:#666; margin-top:5px">Calculado em tempo real.</div>
             </div>
 
-            <div style="margin-top: 30px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
-                <div class="section-title" style="font-size: 1.2rem; color: var(--text-main)">Status do Time</div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                    <span style="color:#aaa">Rating Médio</span>
-                    <span style="color:var(--primary); font-weight:bold">84</span>
+            <div class="section-title" style="margin-top:20px">Uniformes</div>
+            <div class="kits-grid">
+                <div class="kit-card" onclick="changeKit('palmeiras')">
+                    <i class="fas fa-tshirt kit-icon kit-palmeiras"></i>
+                    <div class="team-name">Verde</div>
                 </div>
-                <div style="display:flex; justify-content:space-between;">
-                    <span style="color:#aaa">Química</span>
-                    <span style="color:var(--accent); font-weight:bold">92%</span>
+                <div class="kit-card" onclick="changeKit('flamengo')">
+                    <i class="fas fa-tshirt kit-icon kit-flamengo"></i>
+                    <div class="team-name">Rubro</div>
+                </div>
+                <div class="kit-card" onclick="changeKit('corinthians')">
+                    <i class="fas fa-tshirt kit-icon kit-corinthians"></i>
+                    <div class="team-name">Alvinegro</div>
+                </div>
+                <div class="kit-card" onclick="changeKit('saopaulo')">
+                    <i class="fas fa-tshirt kit-icon kit-saopaulo"></i>
+                    <div class="team-name">Tricolor</div>
+                </div>
+                <div class="kit-card" onclick="changeKit('gremio')">
+                    <i class="fas fa-tshirt kit-icon kit-gremio"></i>
+                    <div class="team-name">Imortal</div>
+                </div>
+                <div class="kit-card" onclick="changeKit('botafogo')">
+                    <i class="fas fa-tshirt kit-icon kit-botafogo"></i>
+                    <div class="team-name">Estrela</div>
                 </div>
             </div>
         </aside>
@@ -331,13 +386,13 @@
             <button class="close-btn" onclick="closeSidebar()">&times;</button>
         </div>
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar jogador...">
+            <input type="text" id="searchInput" placeholder="Buscar nome...">
         </div>
         <div class="player-list" id="playerList"></div>
     </div>
 
     <script>
-        // --- BASE DE DADOS COMPLETA 2026 ---
+        // --- BASE DE DADOS COMPLETA (Jogadores) ---
         const playersData = [
             // PALMEIRAS
             { name: "Carlos Miguel", team: "Palmeiras", pos: ["GOL"] },
@@ -623,19 +678,17 @@
         // IDs Unicos
         playersData.forEach((p, i) => p.id = i + 1);
 
+        // --- VARIÁVEIS DO SISTEMA ---
         const pitch = document.getElementById('pitch');
+        const benchList = document.getElementById('benchList');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
         const playerList = document.getElementById('playerList');
         const searchInput = document.getElementById('searchInput');
 
-        let activeSlot = null;
-        let squad = {};
-        
-        // Drag Var
-        let isDragging = false;
-        let activeDragEl = null;
-        let startX, startY, startLeft, startTop;
+        let activeSlot = null; // ID do slot clicado
+        let activeType = null; // 'pitch' ou 'bench'
+        let squad = {}; // Onde o time é salvo
 
         const formations = {
             '4-3-3': [
@@ -674,13 +727,15 @@
 
         function init() {
             renderPitch('4-3-3');
+            renderBench();
             document.getElementById('formationSelect').addEventListener('change', e => {
-                squad = {}; 
+                // Ao mudar formação, mantemos os jogadores se possivel, mas limpamos o visual
                 renderPitch(e.target.value);
             });
             searchInput.addEventListener('input', renderList);
         }
 
+        // Renderiza Titulares
         function renderPitch(fmt) {
             pitch.innerHTML = `
                 <div class="line mid-line"></div>
@@ -693,46 +748,65 @@
                 el.className = 'player-card empty-card';
                 el.style.top = pos.t + '%';
                 el.style.left = pos.l + '%';
-                el.dataset.role = pos.r;
-                el.dataset.ot = pos.t + '%';
-                el.dataset.ol = pos.l + '%';
-                el.id = `slot-${i}`;
+                el.id = `slot-pitch-${i}`;
                 
-                updateSlot(el, null, pos.r);
+                // Se já tem jogador salvo nesse slot, restaura
+                if(squad[`pitch-${i}`]) updateSlotUI(el, squad[`pitch-${i}`], pos.r);
+                else updateSlotUI(el, null, pos.r);
                 
-                el.addEventListener('mousedown', dragStart);
-                el.addEventListener('touchstart', dragStart, {passive:false});
-                el.addEventListener('click', e => {
-                    if(!isDragging) openSidebar(i, pos.r);
-                });
-                
+                el.onclick = () => openSidebar(i, pos.r, 'pitch');
                 pitch.appendChild(el);
             });
         }
 
-        function updateSlot(el, p, r) {
+        // Renderiza Reservas (7 slots fixos)
+        function renderBench() {
+            benchList.innerHTML = '';
+            for(let i=0; i<7; i++) {
+                const el = document.createElement('div');
+                el.className = 'bench-slot empty-card';
+                el.id = `slot-bench-${i}`;
+                
+                if(squad[`bench-${i}`]) updateSlotUI(el, squad[`bench-${i}`], 'RES');
+                else {
+                     el.innerHTML = `<div class="bench-label">RES</div>`;
+                }
+
+                el.onclick = () => openSidebar(i, 'RES', 'bench');
+                benchList.appendChild(el);
+            }
+        }
+
+        function updateSlotUI(el, p, role) {
             if(p) {
-                el.className = 'player-card';
+                el.className = el.id.includes('bench') ? 'bench-slot' : 'player-card';
                 el.innerHTML = `
                     <div class="pos-badge">${p.pos[0]}</div>
                     <div class="avatar-container">
-                        <img src="https://ui-avatars.com/api/?name=${p.name}&background=random&color=fff&size=128" class="avatar-img">
+                        <img src="https://ui-avatars.com/api/?name=${p.name}&background=random&color=fff&size=128" class="avatar-img" crossOrigin="anonymous">
                     </div>
                     <div class="info-box">
                         <div class="p-name">${p.name.split(' ')[0]}</div>
                     </div>
                 `;
             } else {
-                el.className = 'player-card empty-card';
-                el.innerHTML = `
-                    <div class="avatar-container"><i class="fas fa-plus avatar-icon"></i></div>
-                    <div class="empty-label">${r}</div>
-                `;
+                if(el.id.includes('bench')) {
+                    el.className = 'bench-slot empty-card';
+                    el.innerHTML = `<div class="bench-label">RES</div><div class="avatar-container" style="border:none;box-shadow:none;background:transparent;opacity:0.3"><i class="fas fa-plus"></i></div>`;
+                } else {
+                    el.className = 'player-card empty-card';
+                    el.innerHTML = `
+                        <div class="avatar-container"><i class="fas fa-plus"></i></div>
+                        <div class="empty-label">${role}</div>
+                    `;
+                }
             }
         }
 
-        function openSidebar(idx, role) {
+        // --- SISTEMA DE SELEÇÃO ---
+        function openSidebar(idx, role, type) {
             activeSlot = idx;
+            activeType = type;
             sidebar.classList.add('active');
             overlay.classList.add('active');
             document.querySelector('.sidebar-title').innerText = `Escolher ${role}`;
@@ -747,29 +821,25 @@
 
         function renderList() {
             const term = searchInput.value.toLowerCase();
-            const slotRole = document.getElementById(`slot-${activeSlot}`).dataset.role;
-            
             playerList.innerHTML = '';
             
-            if(squad[activeSlot]) {
+            // Botão remover
+            const slotKey = `${activeType}-${activeSlot}`;
+            if(squad[slotKey]) {
                 const rm = document.createElement('div');
                 rm.className = 'list-item';
-                rm.innerHTML = '<div style="color:red; text-align:center; width:100%">Remover Jogador</div>';
+                rm.innerHTML = '<div style="color:red; text-align:center; width:100%"><i class="fas fa-times"></i> Remover Jogador</div>';
                 rm.onclick = () => selectPlayer(null);
                 playerList.appendChild(rm);
             }
 
             const filtered = playersData.filter(p => {
-                const matchText = p.name.toLowerCase().includes(term) || p.team.toLowerCase().includes(term);
-                if(!term) {
-                    if(slotRole === 'GOL' && !p.pos.includes('GOL')) return false;
-                    if(slotRole === 'ZAG' && !p.pos.includes('ZAG')) return false;
-                }
-                return matchText;
+                return p.name.toLowerCase().includes(term) || p.team.toLowerCase().includes(term);
             });
 
             filtered.forEach(p => {
-                if(Object.values(squad).some(s => s && s.id === p.id && s.id !== squad[activeSlot]?.id)) return;
+                // Não mostrar jogador já escalado em OUTRO slot
+                if(Object.values(squad).some(s => s && s.id === p.id && s.id !== squad[slotKey]?.id)) return;
 
                 const d = document.createElement('div');
                 d.className = 'list-item';
@@ -789,55 +859,118 @@
         }
 
         function selectPlayer(p) {
-            squad[activeSlot] = p;
-            const el = document.getElementById(`slot-${activeSlot}`);
-            updateSlot(el, p, el.dataset.role);
+            const slotKey = `${activeType}-${activeSlot}`;
+            squad[slotKey] = p;
+            
+            const el = document.getElementById(`slot-${slotKey}`);
+            // Pega a role original do dataset ou visual, aqui simplificado
+            const role = activeType === 'bench' ? 'RES' : 'JOG'; 
+            
+            updateSlotUI(el, p, role);
+            updateStats();
             closeSidebar();
         }
 
-        function resetPositions() {
-            document.querySelectorAll('.player-card').forEach(el => {
-                el.style.top = el.dataset.ot;
-                el.style.left = el.dataset.ol;
-            });
-        }
-
-        // --- Drag Logic ---
-        function dragStart(e) {
-            activeDragEl = e.currentTarget;
-            isDragging = false;
-            const evt = e.type.includes('mouse') ? e : e.touches[0];
-            startX = evt.clientX;
-            startY = evt.clientY;
-            startLeft = activeDragEl.offsetLeft;
-            startTop = activeDragEl.offsetTop;
-
-            document.addEventListener('mousemove', dragMove);
-            document.addEventListener('touchmove', dragMove, {passive:false});
-            document.addEventListener('mouseup', dragEnd);
-            document.addEventListener('touchend', dragEnd);
-        }
-
-        function dragMove(e) {
-            const evt = e.type.includes('mouse') ? e : e.touches[0];
-            if(Math.abs(evt.clientX - startX) > 5 || Math.abs(evt.clientY - startY) > 5) {
-                isDragging = true;
-                if(e.cancelable) e.preventDefault();
+        // --- CÁLCULOS E STATS ---
+        function updateStats() {
+            const players = Object.values(squad).filter(p => p);
+            if(players.length === 0) {
+                document.getElementById('teamRating').innerText = "0";
+                document.getElementById('teamChem').innerText = "0%";
+                return;
             }
-            if(!isDragging) return;
+
+            // Cálculo Rating (Fictício para demo: Base 75 + bonus aleatorio do ID)
+            // Em app real, usaria p.rating
+            let totalRate = 0;
+            players.forEach(p => {
+                const pseudoRate = 78 + (p.name.length % 15); // Gera numero entre 78 e 92
+                totalRate += pseudoRate;
+            });
+            const avg = Math.floor(totalRate / players.length);
+
+            // Cálculo Química (Baseado em time)
+            // Lógica: Se jogadores forem do mesmo time, ganham pontos
+            let chemPoints = 0;
+            const teamsCount = {};
+            players.forEach(p => {
+                teamsCount[p.team] = (teamsCount[p.team] || 0) + 1;
+            });
             
-            activeDragEl.style.left = (startLeft + (evt.clientX - startX)) + 'px';
-            activeDragEl.style.top = (startTop + (evt.clientY - startY)) + 'px';
-            activeDragEl.style.zIndex = 1000;
+            // Química aumenta se tiver muitos do mesmo time
+            let maxSyn = 0;
+            Object.values(teamsCount).forEach(c => {
+                if(c > 1) maxSyn += (c * 10); 
+            });
+            
+            // Base chem por jogar na posição correta (simulado: ganha 5pts por jogador)
+            const baseChem = players.length * 5;
+            let finalChem = Math.min(100, baseChem + maxSyn);
+
+            // Animação números
+            animateValue("teamRating", parseInt(document.getElementById('teamRating').innerText), avg, 1000);
+            animateValue("teamChem", parseInt(document.getElementById('teamChem').innerText), finalChem, 1000, "%");
         }
 
-        function dragEnd() {
-            document.removeEventListener('mousemove', dragMove);
-            document.removeEventListener('touchmove', dragMove);
-            document.removeEventListener('mouseup', dragEnd);
-            document.removeEventListener('touchend', dragEnd);
-            if(activeDragEl) activeDragEl.style.zIndex = '';
-            setTimeout(() => isDragging = false, 50);
+        function animateValue(id, start, end, duration, suffix = "") {
+            if (start === end) return;
+            const range = end - start;
+            let current = start;
+            const increment = end > start ? 1 : -1;
+            const stepTime = Math.abs(Math.floor(duration / range));
+            const obj = document.getElementById(id);
+            const timer = setInterval(function() {
+                current += increment;
+                obj.innerText = current + suffix;
+                if (current == end) clearInterval(timer);
+            }, stepTime > 50 ? 50 : stepTime); // Max speed cap
+        }
+
+        function changeKit(teamClass) {
+            // Apenas um visual effect simples, poderia trocar cores do CSS global
+            document.documentElement.style.setProperty('--primary', getColor(teamClass));
+        }
+
+        function getColor(team) {
+            if(team === 'palmeiras') return '#00ff88';
+            if(team === 'flamengo') return '#ff3333';
+            if(team === 'corinthians') return '#ffffff';
+            if(team === 'saopaulo') return '#ffaaaa';
+            if(team === 'gremio') return '#33ccff';
+            if(team === 'botafogo') return '#cccccc';
+            return '#00f2ff';
+        }
+
+        function resetAll() {
+            squad = {};
+            init(); // Re-renderiza tudo vazio
+            updateStats();
+        }
+
+        // --- DOWNLOAD DA IMAGEM ---
+        function downloadSquad() {
+            const btn = document.querySelector('.download-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando...';
+
+            const element = document.getElementById('captureArea');
+
+            html2canvas(element, {
+                backgroundColor: null, // Fundo Transparente
+                useCORS: true, // Importante para as imagens de avatar
+                scale: 2 // Alta resolução
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'meu-fut26-squad.png';
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+                
+                btn.innerHTML = originalText;
+            }).catch(err => {
+                alert('Erro ao gerar imagem. Tente novamente.');
+                btn.innerHTML = originalText;
+                console.error(err);
+            });
         }
 
         init();
