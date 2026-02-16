@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Escalador - Palmeiras</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="index.html" title="Voltar para o início">
+                <span class="material-icons">arrow_back</span>
+                Escala <strong>AI</strong> | Palmeiras
+            </a>
+        </div>
+        
+        <div class="controls">
+            <select id="formationSelect">
+                <option value="4-3-3">4-3-3</option>
+                <option value="4-4-2">4-4-2</option>
+                <option value="3-5-2">3-5-2</option>
+            </select>
+
+            <button onclick="saveLineup()" class="btn-icon" title="Salvar time">
+                <span class="material-icons">save</span>
+            </button>
+            
+            <button onclick="loadSuggested()" class="btn-icon" title="Carregar titulares">
+                <span class="material-icons">auto_awesome</span>
+            </button>
+            
+            <button onclick="clearField()" class="btn-icon danger" title="Limpar campo">
+                <span class="material-icons">delete_outline</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Elenco</h3>
+                <small>Clique ou arraste</small>
+            </div>
+            <div id="playerList" class="player-list-container"></div>
+        </aside>
+
+        <section class="field-container">
+            <div class="pitch" id="pitch">
+                <div class="field-line line-mid"></div>
+                <div class="field-circle center-circle"></div>
+                <div class="field-area area-top"></div>
+                <div class="field-area area-bottom"></div>
+                
+                </div>
+        </section>
+    </main>
+
+    <script src="elenco.js"></script>
+    
+    <script src="script.js"></script>
+
+</body>
+</html>
