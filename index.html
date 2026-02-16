@@ -2,330 +2,107 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fut Master 2026 | Elencos Atualizados</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala AI - Selecione seu Time</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold: #f2c44e;
-            --dark-bg: #0d0d11;
-            --panel: rgba(20, 20, 25, 0.95);
-            --border: rgba(255, 255, 255, 0.1);
+        /* Estilos específicos apenas para a Home */
+        body.home-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1e1e1e 0%, #121212 100%);
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--dark-bg);
-            background-image: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0d0d11 100%);
+        .hero {
+            text-align: center;
+            padding: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+        .hero h1 span {
+            color: var(--primary); /* Pega a cor verde do CSS global se definido, ou fallback */
+            color: #006437; 
+        }
+        .hero p {
+            color: #888;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        .teams-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .team-card {
+            background: #252525;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 180px;
+            text-decoration: none;
             color: white;
-            height: 100vh;
-            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-        }
-
-        /* HEADER */
-        header {
-            height: 60px;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            z-index: 100;
+            gap: 10px;
         }
-
-        .logo { font-family: 'Rajdhani'; font-size: 1.5rem; font-weight: 700; color: var(--gold); }
-        .controls { display: flex; gap: 10px; }
-
-        .btn {
-            background: #1a1a1a; border: 1px solid var(--border); color: white;
-            padding: 8px 15px; border-radius: 6px; cursor: pointer; font-family: 'Rajdhani';
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
+        /* Cores específicas dos cards na home */
+        .card-palmeiras:hover { border-color: #006437; }
+        .card-corinthians:hover { border-color: #ffffff; }
+        .card-spfc:hover { border-color: #C8102E; }
 
-        .btn-save { background: var(--gold); color: black; border: none; font-weight: 700; }
-
-        /* CAMPO */
-        .main-container { display: flex; flex: 1; height: calc(100vh - 60px); }
-
-        .pitch-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-
-        .pitch {
-            width: 100%; max-width: 500px; aspect-ratio: 3/4;
-            background: #1e451e; border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 10px; position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        .team-shield {
+            width: 60px;
+            height: 60px;
+            background: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
         }
-
-        .line { position: absolute; border: 2px solid rgba(255,255,255,0.2); pointer-events: none; }
-        .mid-line { width: 100%; top: 50%; }
-        .center-circle { width: 30%; aspect-ratio: 1; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-
-        /* JOGADOR */
-        .player-slot {
-            position: absolute; width: 18%; transform: translate(-50%, -50%);
-            display: flex; flex-direction: column; align-items: center; cursor: pointer;
-        }
-
-        .p-icon {
-            width: 100%; aspect-ratio: 1; background: rgba(0,0,0,0.5);
-            border-radius: 50%; border: 2px dashed rgba(255,255,255,0.3);
-            display: flex; items-center; justify-content: center; overflow: hidden;
-        }
-        .p-icon img { width: 100%; height: 100%; object-fit: cover; }
-        .p-icon.filled { border-style: solid; border-color: var(--gold); }
-
-        .p-name {
-            margin-top: 5px; background: rgba(0,0,0,0.8); font-size: 0.7rem;
-            padding: 2px 6px; border-radius: 4px; white-space: nowrap;
-            max-width: 120%; overflow: hidden;
-        }
-
-        /* MODAL */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-            display: none; flex-direction: column; z-index: 200; padding: 20px;
-        }
-        .modal.active { display: flex; }
-
-        .search-box {
-            width: 100%; padding: 15px; background: #111; border: 1px solid var(--gold);
-            color: white; border-radius: 8px; margin-bottom: 20px; outline: none;
-        }
-
-        .player-list { flex: 1; overflow-y: auto; display: grid; grid-template-columns: 1fr; gap: 10px; }
         
-        .list-item {
-            background: #1a1a1a; padding: 12px; border-radius: 8px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .list-item:hover { background: #252525; }
-        .player-info h4 { font-size: 0.9rem; margin-bottom: 2px; }
-        .player-info span { font-size: 0.7rem; color: #888; }
-        .add-btn { color: var(--gold); font-weight: bold; font-size: 1.2rem; }
-
-        /* SIDEBAR */
-        .sidebar { width: 300px; background: var(--panel); border-left: 1px solid var(--border); padding: 20px; }
-        .bench { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-        .bench-slot { aspect-ratio: 1; border: 1px dashed #444; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
-        @media (max-width: 800px) {
-            .main-container { flex-direction: column; overflow-y: auto; }
-            .sidebar { width: 100%; border: none; border-top: 1px solid var(--border); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body>
+<body class="home-body">
 
-<header>
-    <div class="logo">FUT MASTER 2026</div>
-    <div class="controls">
-        <select id="formation" class="btn" onchange="changeFormation()">
-            <option value="433">4-3-3</option>
-            <option value="442">4-4-2</option>
-            <option value="352">3-5-2</option>
-        </select>
-        <button class="btn btn-save" onclick="downloadImage()">BAIXAR</button>
-    </div>
-</header>
+    <div class="hero">
+        <h1>Escala <span>AI</span></h1>
+        <p>Monte a escalação perfeita para o Brasileirão.</p>
 
-<div class="main-container">
-    <div class="pitch-area">
-        <div class="pitch" id="capture">
-            <div class="line mid-line"></div>
-            <div class="line center-circle"></div>
-            <div id="players-root"></div>
+        <div class="teams-grid">
+            <a href="palmeiras.html" class="team-card card-palmeiras">
+                <div class="team-shield" style="background: #006437;">P</div>
+                <h3>Palmeiras</h3>
+            </a>
+
+            <a href="#" class="team-card card-corinthians" style="opacity: 0.5; cursor: not-allowed;">
+                <div class="team-shield" style="background: #000;">C</div>
+                <h3>Corinthians</h3>
+            </a>
+
+            <a href="#" class="team-card card-spfc" style="opacity: 0.5; cursor: not-allowed;">
+                <div class="team-shield" style="background: #C8102E;">S</div>
+                <h3>São Paulo</h3>
+            </a>
         </div>
     </div>
 
-    <aside class="sidebar">
-        <h3>RESERVAS</h3>
-        <div class="bench" id="bench-root"></div>
-    </aside>
-</div>
-
-<div class="modal" id="modal">
-    <input type="text" class="search-box" id="search" placeholder="Busque jogador ou time (ex: Flamengo)..." onkeyup="renderList()">
-    <div class="player-list" id="list"></div>
-    <button class="btn" style="margin-top:10px" onclick="closeModal()">FECHAR</button>
-</div>
-
-<script>
-    // === BANCO DE DADOS ATUALIZADO 2026 ===
-    const database = [
-        // PALMEIRAS
-        {n: "Carlos Miguel", t: "Palmeiras", p: "GOL"}, {n: "Marcelo Lomba", t: "Palmeiras", p: "GOL"},
-        {n: "Murilo", t: "Palmeiras", p: "ZAG"}, {n: "Gustavo Gómez", t: "Palmeiras", p: "ZAG"}, {n: "Bruno Fuchs", t: "Palmeiras", p: "ZAG"},
-        {n: "Agustín Giay", t: "Palmeiras", p: "LD"}, {n: "Khellven", t: "Palmeiras", p: "LD"},
-        {n: "Joaquín Piquerez", t: "Palmeiras", p: "LE"}, {n: "Jefté", t: "Palmeiras", p: "LE"},
-        {n: "Emiliano Martínez", t: "Palmeiras", p: "VOL"}, {n: "Marlon Freitas", t: "Palmeiras", p: "VOL"},
-        {n: "Andreas Pereira", t: "Palmeiras", p: "MEI"}, {n: "Mauricio", t: "Palmeiras", p: "MEI"},
-        {n: "Jhon Arias", t: "Palmeiras", p: "ATA"}, {n: "Felipe Anderson", t: "Palmeiras", p: "ATA"}, {n: "Ramón Sosa", t: "Palmeiras", p: "ATA"},
-        {n: "Vitor Roque", t: "Palmeiras", p: "CA"}, {n: "Flaco López", t: "Palmeiras", p: "CA"},
-
-        // CORINTHIANS
-        {n: "Hugo Souza", t: "Corinthians", p: "GOL"}, {n: "Matheus Donelli", t: "Corinthians", p: "GOL"},
-        {n: "André Ramalho", t: "Corinthians", p: "ZAG"}, {n: "Cacá", t: "Corinthians", p: "ZAG"}, {n: "Gabriel Paulista", t: "Corinthians", p: "ZAG"},
-        {n: "Matheuzinho", t: "Corinthians", p: "LD"}, {n: "Hugo", t: "Corinthians", p: "LE"},
-        {n: "Raniele", t: "Corinthians", p: "VOL"}, {n: "Charles", t: "Corinthians", p: "VOL"},
-        {n: "Rodrigo Garro", t: "Corinthians", p: "MEI"}, {n: "Matheus Pereira", t: "Corinthians", p: "MEI"},
-        {n: "Yuri Alberto", t: "Corinthians", p: "CA"}, {n: "Memphis Depay", t: "Corinthians", p: "CA"},
-
-        // SÃO PAULO
-        {n: "Carlos Coronel", t: "São Paulo", p: "GOL"}, {n: "Rafael", t: "São Paulo", p: "GOL"},
-        {n: "Nahuel Ferraresi", t: "São Paulo", p: "ZAG"}, {n: "Alan Franco", t: "São Paulo", p: "ZAG"}, {n: "Rafael Tolói", t: "São Paulo", p: "ZAG"},
-        {n: "Cédric Soares", t: "São Paulo", p: "LD"}, {n: "Wendell", t: "São Paulo", p: "LE"}, {n: "Enzo Díaz", t: "São Paulo", p: "LE"},
-        {n: "Pablo Maia", t: "São Paulo", p: "VOL"}, {n: "Oscar", t: "São Paulo", p: "MEI"},
-        {n: "Lucas Moura", t: "São Paulo", p: "ATA"}, {n: "Ferreirinha", t: "São Paulo", p: "ATA"},
-        {n: "Jonathan Calleri", t: "São Paulo", p: "CA"}, {n: "Luciano", t: "São Paulo", p: "CA"},
-
-        // FLAMENGO
-        {n: "Agustín Rossi", t: "Flamengo", p: "GOL"}, {n: "Léo Pereira", t: "Flamengo", p: "ZAG"}, {n: "Léo Ortiz", t: "Flamengo", p: "ZAG"},
-        {n: "Vitão", t: "Flamengo", p: "ZAG"}, {n: "Emerson Royal", t: "Flamengo", p: "LD"}, {n: "Ayrton Lucas", t: "Flamengo", p: "LE"},
-        {n: "Erick Pulgar", t: "Flamengo", p: "VOL"}, {n: "Lucas Paquetá", t: "Flamengo", p: "MEI"},
-        {n: "Arrascaeta", t: "Flamengo", p: "MEI"}, {n: "De La Cruz", t: "Flamengo", p: "MEI"},
-        {n: "Samuel Lino", t: "Flamengo", p: "ATA"}, {n: "Everton Cebolinha", t: "Flamengo", p: "ATA"}, {n: "Pedro", t: "Flamengo", p: "CA"},
-
-        // BOTAFOGO
-        {n: "Léo Linck", t: "Botafogo", p: "GOL"}, {n: "Neto", t: "Botafogo", p: "GOL"},
-        {n: "Alexander Barboza", t: "Botafogo", p: "ZAG"}, {n: "Bastos", t: "Botafogo", p: "ZAG"},
-        {n: "Vitinho", t: "Botafogo", p: "LD"}, {n: "Alex Telles", t: "Botafogo", p: "LE"},
-        {n: "Danilo", t: "Botafogo", p: "VOL"}, {n: "Almada", t: "Botafogo", p: "MEI"},
-        {n: "Artur", t: "Botafogo", p: "ATA"}, {n: "Matheus Martins", t: "Botafogo", p: "ATA"}, {n: "Igor Jesus", t: "Botafogo", p: "CA"},
-
-        // FLUMINENSE
-        {n: "Fábio", t: "Fluminense", p: "GOL"}, {n: "Ignácio", t: "Fluminense", p: "ZAG"}, {n: "Igor Rabello", t: "Fluminense", p: "ZAG"},
-        {n: "Samuel Xavier", t: "Fluminense", p: "LD"}, {n: "Guilherme Arana", t: "Fluminense", p: "LE"},
-        {n: "Martinelli", t: "Fluminense", p: "VOL"}, {n: "Ganso", t: "Fluminense", p: "MEI"},
-        {n: "Soteldo", t: "Fluminense", p: "ATA"}, {n: "Germán Cano", t: "Fluminense", p: "CA"},
-
-        // GRÊMIO
-        {n: "Weverton", t: "Grêmio", p: "GOL"}, {n: "Wagner Leonardo", t: "Grêmio", p: "ZAG"}, {n: "Walter Kannemann", t: "Grêmio", p: "ZAG"},
-        {n: "João Pedro", t: "Grêmio", p: "LD"}, {n: "Mathías Villasanti", t: "Grêmio", p: "VOL"},
-        {n: "Arthur Melo", t: "Grêmio", p: "MEI"}, {n: "Franco Cristaldo", t: "Grêmio", p: "MEI"},
-        {n: "Martin Braithwaite", t: "Grêmio", p: "CA"},
-
-        // VASCO
-        {n: "Léo Jardim", t: "Vasco", p: "GOL"}, {n: "Robert Renan", t: "Vasco", p: "ZAG"}, {n: "Carlos Cuesta", t: "Vasco", p: "ZAG"},
-        {n: "Paulo Henrique", t: "Vasco", p: "LD"}, {n: "Lucas Piton", t: "Vasco", p: "LE"},
-        {n: "Philippe Coutinho", t: "Vasco", p: "MEI"}, {n: "Adson", t: "Vasco", p: "ATA"}
-    ];
-
-    const formations = {
-        "433": [
-            {t:85, l:50}, {t:70, l:20}, {t:72, l:40}, {t:72, l:60}, {t:70, l:80},
-            {t:45, l:30}, {t:50, l:50}, {t:45, l:70},
-            {t:20, l:20}, {t:15, l:50}, {t:20, l:80}
-        ],
-        "442": [
-            {t:85, l:50}, {t:70, l:15}, {t:72, l:38}, {t:72, l:62}, {t:70, l:85},
-            {t:45, l:15}, {t:45, l:38}, {t:45, l:62}, {t:45, l:85},
-            {t:15, l:35}, {t:15, l:65}
-        ]
-    };
-
-    let selectedSlot = null;
-    let currentFormation = "433";
-    let team = {};
-
-    function init() {
-        changeFormation();
-        renderBenchSlots();
-    }
-
-    function changeFormation() {
-        currentFormation = document.getElementById('formation').value;
-        const root = document.getElementById('players-root');
-        root.innerHTML = '';
-        formations[currentFormation].forEach((pos, i) => {
-            const slot = document.createElement('div');
-            slot.className = 'player-slot';
-            slot.style.top = pos.t + '%';
-            slot.style.left = pos.l + '%';
-            slot.onclick = () => openModal('p' + i);
-            
-            const player = team['p'+i];
-            slot.innerHTML = `
-                <div class="p-icon ${player ? 'filled' : ''}">
-                    ${player ? `<img src="https://ui-avatars.com/api/?name=${player.n}&background=random&color=fff">` : '<i class="fa fa-plus"></i>'}
-                </div>
-                <div class="p-name">${player ? player.n : '---'}</div>
-            `;
-            root.appendChild(slot);
-        });
-    }
-
-    function renderBenchSlots() {
-        const root = document.getElementById('bench-root');
-        root.innerHTML = '';
-        for(let i=0; i<6; i++) {
-            const player = team['b'+i];
-            const div = document.createElement('div');
-            div.className = 'bench-slot';
-            div.onclick = () => openModal('b' + i);
-            div.innerHTML = player ? `<img src="https://ui-avatars.com/api/?name=${player.n}&background=random&color=fff" style="width:100%; border-radius:8px">` : '<i class="fa fa-plus"></i>';
-            root.appendChild(div);
-        }
-    }
-
-    function openModal(slotId) {
-        selectedSlot = slotId;
-        document.getElementById('modal').classList.add('active');
-        renderList();
-    }
-
-    function closeModal() {
-        document.getElementById('modal').classList.remove('active');
-    }
-
-    function renderList() {
-        const term = document.getElementById('search').value.toLowerCase();
-        const list = document.getElementById('list');
-        list.innerHTML = '';
-
-        const filtered = database.filter(p => 
-            p.n.toLowerCase().includes(term) || p.t.toLowerCase().includes(term)
-        );
-
-        filtered.forEach(p => {
-            const div = document.createElement('div');
-            div.className = 'list-item';
-            div.innerHTML = `
-                <div class="player-info">
-                    <h4>${p.n}</h4>
-                    <span>${p.t} • ${p.p}</span>
-                </div>
-                <div class="add-btn"><i class="fa fa-plus-circle"></i></div>
-            `;
-            div.onclick = () => {
-                team[selectedSlot] = p;
-                closeModal();
-                changeFormation();
-                renderBenchSlots();
-            };
-            list.appendChild(div);
-        });
-    }
-
-    async function downloadImage() {
-        const el = document.getElementById('capture');
-        const canvas = await html2canvas(el);
-        const link = document.createElement('a');
-        link.download = 'meu-time-2026.png';
-        link.href = canvas.toDataURL();
-        link.click();
-    }
-
-    init();
-</script>
 </body>
 </html>
